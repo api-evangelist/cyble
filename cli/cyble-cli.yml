@@ -1,0 +1,81 @@
+generated: '2026-08-11'
+method: searched
+source: https://docs.odin.io/cli/cli
+name: odin
+description: >-
+  First-party Go CLI for the ODIN API — search hosts, exposed buckets, exposed files and DNS/domain
+  records from a terminal, check remaining account credits, and list the searchable fields per dataset.
+repository: https://github.com/cybledev/odin-cli
+docs: https://docs.odin.io/cli/cli
+command_reference: https://github.com/cybledev/odin-cli/tree/main/docs/odin.md
+requires: Go 1.21+
+install:
+- method: go install
+  command: go install github.com/cybledev/odin-cli/cmd/odin@latest
+  note: $GOPATH must be on $PATH for the odin binary to resolve.
+authentication:
+  header: X-API-Key
+  flag: --X-API-Key
+  config: odin init writes a config file holding the API key
+  key_source: https://search.odin.io/account/api-keys
+commands:
+- name: hosts
+  group: search
+  description: Search the list of hosts and their services
+- name: exposed-buckets
+  group: search
+  description: Search across millions of buckets exposed over the internet
+- name: exposed-files
+  group: search
+  description: Search across all the exposed files over the internet
+- name: dns
+  group: search
+  description: Search domains/subdomains and whois details
+- name: credits
+  group: account
+  description: Get the account related remaining and used credits details
+- name: fields
+  group: metadata
+  description: Get list of searchable fields
+- name: health
+  group: metadata
+  description: Get the status of the API server
+- name: init
+  group: config
+  description: Initialize the config file and api keys
+- name: completion
+  group: config
+  description: Generate completion script
+- name: help
+  group: config
+  description: Help about any command
+flags:
+- flag: --config string
+  description: Config file path
+- flag: --dry-run
+  description: Do not send the request to server
+- flag: --raw-output
+  description: Output raw json response
+- flag: --X-API-Key string
+  description: API Key authentication
+- flag: -h, --help
+  description: Display help information
+flows:
+- name: Paginated host search from a raw request body
+  example: |
+    odin hosts search --query='{"query": "*", "limit": 10, "start": [1721808680130, 2]}'
+  note: >-
+    Pagination is cursor-based — read pagination.last from the previous response and pass it back as
+    `start`. A request body can also be supplied from a file with --query="$(cat request.json)".
+- name: Search hosts by port and ASN
+  example: odin hosts search --request.query="services.port:443 AND asn.number:AS13335"
+- name: Search exposed AWS buckets with source files, newest first
+  example: >-
+    odin exposed-buckets search --request.query='provider: aws AND file_cat_count.src: [10 TO *]'
+    --request.sort_by="ins_at" --request.sort_dir="desc"
+- name: Search domains and write to a file
+  example: odin dns search --request.domain="cloudflare.com" > cf_domains.txt
+x-currency:
+  latest_release: v1.0.3
+  released: '2024-10-16'
+  source: https://proxy.golang.org/github.com/cybledev/odin-cli/@latest

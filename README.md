@@ -42,5 +42,22 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cyble is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Cyble Inc. is an AI-native cyber threat intelligence company headquartered in Cupertino, California,
+serving enterprises, governments and federal bodies with dark-web monitoring, attack-surface
+management and actionable threat intelligence. Its product family includes Cyble Vision, Cyble Hawk,
+AmIBreached and The Cyber Express — plus **ODIN**, a public internet-scanning search engine indexing
+254M+ IPv4 hosts, 3B+ services across 500+ ports, 789k+ exposed cloud storage buckets, 117B+ exposed
+files and 10B+ subdomains.
+
+ODIN is the company's public, self-serve developer surface, and it is what this profile covers.
+
+- Website — https://cyble.com/
+- ODIN — https://odin.io/
+- Developer docs — https://docs.odin.io/
+- API reference — https://docs.odin.io/api-reference/introduction
+- OpenAPI 3.0.1 (27 operations) — https://docs.odin.io/openapi.yaml
+- llms.txt — https://docs.odin.io/llms.txt
+- Postman — https://www.postman.com/cybleai/cyble-odin-public/overview
+- GitHub — https://github.com/cybledev
+- Status — https://status.odin.io
+- Trust portal — https://trust.cyble.com/

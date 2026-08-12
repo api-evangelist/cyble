@@ -1,0 +1,240 @@
+generated: '2026-08-11'
+method: derived
+source: openapi/cyble-odin-openapi.yml
+docs:
+- https://docs.odin.io/field-description/hosts
+- https://docs.odin.io/field-description/exposed-buckets
+- https://docs.odin.io/field-description/exposed-files
+note: >-
+  Derived from the OpenAPI component schemas and their $ref graph. ODIN is a search index over five
+  datasets, not a transactional resource model — there are no create/update/delete operations and no
+  server-assigned object ids with prefixes. Entities are joined by natural keys: an IP address, a
+  bucket name, a domain name, a CVE id. The spec carries two parallel copies of the host object graph
+  (the bare IP* schemas and the service.* schemas) with identical field sets, which is a duplication
+  in the contract rather than two real entities.
+datasets:
+- name: Hosts
+  description: IPv4 scan results across 500+ ports, enriched with ASN, geolocation, hostnames, WHOIS, CVEs and exploits.
+  key: ip
+  paths:
+  - "/v1/hosts/search"
+  - "/v1/hosts/count"
+  - "/v1/hosts/summary"
+  - "/v1/hosts/{ip}"
+  - "/v1/hosts/cve/{ip}"
+  - "/v1/hosts/cves/{ip}/{cve}"
+  - "/v1/hosts/exploits/{ip}"
+  - "/v1/hosts/exploits/{ip}/{cve}"
+  - "/v1/cves/all/{ip}/{page}"
+- name: Exposed Buckets
+  description: Cloud storage buckets discovered open on the internet, AI/ML-labelled and categorised.
+  key: name
+  paths:
+  - "/v1/exposed/buckets/search"
+  - "/v1/exposed/buckets/count"
+  - "/v1/exposed/buckets/summary"
+- name: Exposed Files
+  description: Files harvested from exposed buckets, categorised and labelled by sensitivity.
+  key: path
+  paths:
+  - "/v1/exposed/files/search"
+  - "/v1/exposed/files/count"
+  - "/v1/exposed/files/summary"
+- name: Domains
+  description: Domains, subdomains and WHOIS records, current and historical.
+  key: domain
+  paths:
+  - "/v1/domain/search"
+  - "/v1/domain/count"
+  - "/v1/domain/subdomain/search"
+  - "/v1/domain/subdomain/count"
+  - "/v1/domain/whois/{domain-name}"
+  - "/v1/domain/whois/{domain-name}/historical"
+  - "/v1/domain/whois/{domain-name}/is-expired"
+  - "/v1/domain/whois/{domain-name}/is-registered"
+- name: Fields
+  description: The queryable field registry per dataset — the metadata surface that makes Lucene queries writable.
+  key: name
+  paths:
+  - "/v1/fields/hosts/{category}"
+  - "/v1/fields/exposed/buckets"
+  - "/v1/fields/exposed/files"
+entities:
+- name: Host
+  schema: service.Service
+  alias_schema: ipservices.IPSummaryData
+  key: ip
+  fields: [ip, is_ipv4, is_ipv6, is_vuln, scan_id, last_updated_at, banners, extra_info, modules, name, port, product, protocol, version]
+- name: Service
+  schema: IPService
+  key: port
+  fields: [port, protocol, name, product, version, tunnel, url, extra_info, modules, last_updated_at]
+- name: ASN
+  schema: service.IPASN
+  key: number
+  fields: [number, organization, country_code]
+- name: Location
+  schema: service.IPLocation
+  fields: [city, continent, coordinates, country_code, country_name, geo_point, locale_code, network, postal_code]
+- name: Hostname
+  schema: service.IPHostname
+  key: name
+  fields: [name, last_updated_at]
+- name: Domain
+  schema: service.IPDomain
+  key: name
+  fields: [name, country, dns_servers, emails, web_server, last_updated_at]
+- name: Whois
+  schema: service.IPWhois
+  fields: [network, organization, descr, raw, _encoding]
+- name: CVE
+  schema: ipservices.IpCveDetails
+  key: id
+  fields: [id, score, severity, summary, vector_string, weakness, references, exploit, services]
+- name: Exploit
+  schema: vision.ExploitDetails
+  key: id
+  fields: [id, description, file, platform, type, url]
+- name: Tag
+  schema: service.IPTag
+  key: name
+  fields: [name, pretty_name, value, last_updated_at]
+- name: Software
+  schema: service.IPServiceSoftware
+  fields: [vendor, product, version, edition, language, part, update, uri]
+- name: Bucket
+  schema: exposed.Bucket
+  key: name
+  fields: [name, provider, region, owner_id, open, deleted, labels, categories, files, new_files, sensitive_files, file_cat_count, age_in_days, ins_at, scan_at, prev_scan_at, last_found_at, last_open_at, ef_mod_at, lf_mod_at]
+- name: File
+  schema: exposed.File
+  key: path
+  fields: [name, path, bucket, provider, region, url, ext, ext_desc, category, label, type, size, etag, accessible, sensitive, ins_at, mod_at, scan_at]
+- name: DNSRecord
+  schema: eshandler.DNS
+  key: domain
+  fields: [domain, subdomain, ext_dns_name, added_at]
+- name: DomainWhois
+  schema: schema.DomainWhoisResponse
+  key: domain_name
+  fields: [domain_name, tld, domain_status, name_servers, registrar, created_date, updated_date, expires_date, registrant_contact, administrative_contact, technical_contact, billing_contact, audited_fields, raw_data]
+- name: Registrar
+  schema: schema.Registrar
+  key: id
+  fields: [id, name, url, whois]
+- name: Contact
+  schema: schema.Contact
+  fields: [name, company, email, email_domain, phone, fax, address, city, state, zip, country, country_code]
+- name: Field
+  schema: Field
+  key: name
+  fields: [name, category, display_category, is_locked]
+- name: TokenStats
+  schema: tokens.UserTokenStats
+  fields: [details, search, expires_on]
+  note: Credit-accounting entity declared in components but not returned by any published path.
+relationships:
+- from: Host
+  to: Service
+  kind: has_many
+  via: services
+- from: Host
+  to: ASN
+  kind: has_one
+  via: asn
+- from: Host
+  to: Location
+  kind: has_one
+  via: location
+- from: Host
+  to: Hostname
+  kind: has_many
+  via: hostnames
+- from: Host
+  to: Domain
+  kind: has_many
+  via: domains
+- from: Host
+  to: Whois
+  kind: has_one
+  via: whois
+- from: Host
+  to: Tag
+  kind: has_many
+  via: tags
+- from: Host
+  to: CVE
+  kind: has_many
+  via: cve
+- from: Service
+  to: CVE
+  kind: has_many
+  via: cve
+- from: Service
+  to: Software
+  kind: has_many
+  via: softwares
+- from: Service
+  to: ServiceMeta
+  kind: has_one
+  via: _meta
+- from: CVE
+  to: Exploit
+  kind: has_many
+  via: exploit
+- from: CVE
+  to: Service
+  kind: has_many
+  via: services
+- from: Bucket
+  to: File
+  kind: has_many
+  via: bucket
+  note: Join is by bucket name — exposed.File.bucket carries the Bucket.name value. No numeric foreign key.
+- from: File
+  to: Bucket
+  kind: belongs_to
+  via: bucket
+- from: DomainWhois
+  to: Registrar
+  kind: has_one
+  via: registrar
+- from: DomainWhois
+  to: Contact
+  kind: has_many
+  via: [registrant_contact, administrative_contact, technical_contact, billing_contact]
+- from: DomainWhois
+  to: Audit
+  kind: has_one
+  via: audited_fields
+- from: DNSRecord
+  to: EXTDNSName
+  kind: has_one
+  via: ext_dns_name
+join_keys:
+- key: ip
+  joins: [Host, Service, CVE, Exploit]
+  note: The IPv4 address is the primary join across the hosts dataset — it appears as a path parameter on six operations.
+- key: bucket name
+  joins: [Bucket, File]
+- key: domain
+  joins: [Domain, DNSRecord, DomainWhois]
+- key: cve id
+  joins: [CVE, Exploit, Service]
+  note: The only cross-dataset key that also resolves outside ODIN (to NVD/MITRE).
+duplication:
+- schemas: [IPASN, service.IPASN]
+- schemas: [IPDomain, service.IPDomain]
+- schemas: [IPHostname, service.IPHostname]
+- schemas: [IPLocation, service.IPLocation]
+- schemas: [IPServiceMeta, service.IPServiceMeta]
+- schemas: [IPServiceSoftware, service.IPServiceSoftware]
+- schemas: [IPTag, service.IPTag]
+- schemas: [IPWhois, service.IPWhois]
+- schemas: [Encoding, service.Encoding]
+- schemas: [IPCVE, ipservices.IpCveDetails]
+- schemas: [IPExploitDetails, vision.ExploitDetails]
+  note: >-
+    Eleven pairs of byte-identical component schemas exist under two naming conventions. The bare
+    names are unreferenced by any operation in the published spec; the service.*/ipservices.*/vision.*
+    names carry the live graph. A generated client emits both sets.

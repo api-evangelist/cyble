@@ -1,0 +1,37 @@
+generated: '2026-08-11'
+method: probed
+source: https://docs.odin.io/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.odin.io
+  note: >-
+    Served by the ODIN documentation host (Mintlify). The API host (api.odin.io), the product host
+    (odin.io) and the corporate host (cyble.com) all return 404/HTML for both the canonical and the
+    legacy /.well-known/agent.json path — see well-known/cyble-well-known.yml for the full probe set.
+conformance:
+  spec: A2A 1.0.0
+  grade: flavored
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  deviations:
+  - supportedInterfaces-instead-of-additionalInterfaces
+  - empty-skills-array
+  note: >-
+    Passes the three hard structural checks (capabilities is an object, protocolVersion is present,
+    skills is an array) but uses the pre-1.0.0 `supportedInterfaces` key rather than
+    `additionalInterfaces`, and publishes zero skills — the card advertises a documentation site, not
+    an executable agent surface. Graded flavored rather than conformant on that basis.
+card:
+  name: Odin by Cyble Documentation
+  url: https://docs.odin.io/
+  version: 1.0.0
+  skills: 0
+  provider_organization: Odin by Cyble Documentation
+  documentation_url: https://docs.odin.io/
+  file: cyble-agent-card.json
+x-evidence:
+  fetched: '2026-08-11'
+  url: https://docs.odin.io/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json

@@ -1,0 +1,59 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  https://docs.odin.io/sdks/python, https://docs.odin.io/sdks/js, https://docs.odin.io/sdks/go,
+  https://docs.odin.io/cli/cli, https://github.com/cybledev — versions read from registry.npmjs.org,
+  pypi.org/pypi/<pkg>/json and proxy.golang.org on 2026-08-11
+note: >-
+  All four first-party client libraries are published under the ODIN brand from the cybledev GitHub
+  org. CURRENCY IS THE FINDING: the Python and JavaScript SDKs both last shipped 2.0.1 in August 2024
+  and the Go SDK has never cut a semver tag at all — proxy.golang.org resolves it only to a
+  pseudo-version from a January 2025 commit, and the `@v2` import path the docs instruct users to
+  `go get` has no matching version in the module proxy. The API itself is still live and serving.
+packages:
+- language: python
+  registry: pypi
+  name: odin-sdk
+  url: https://pypi.org/project/odin-sdk/
+  install: pip install odin-sdk
+  official: true
+  version: 2.0.1
+  published: '2024-08-10'
+  repository: https://github.com/cybledev/odin-sdk-python
+  docs: https://docs.odin.io/sdks/python
+- language: javascript
+  registry: npm
+  name: odin-sdk
+  url: https://www.npmjs.com/package/odin-sdk
+  install: npm install odin-sdk --save
+  official: true
+  version: 2.0.1
+  published: '2024-08-10'
+  repository: https://github.com/cybledev/odin-sdk-js
+  docs: https://docs.odin.io/sdks/js
+- language: go
+  registry: go
+  name: github.com/cybledev/odin-sdk-go
+  url: https://pkg.go.dev/github.com/cybledev/odin-sdk-go
+  install: go get github.com/cybledev/odin-sdk-go@v2
+  official: true
+  version: null
+  published: '2025-01-16'
+  repository: https://github.com/cybledev/odin-sdk-go
+  docs: https://docs.odin.io/sdks/go
+  note: >-
+    version null because the module has no semver release. proxy.golang.org/.../@latest returns only
+    the pseudo-version v0.0.0-20250116090420-81f22fef6f88 (commit date 2025-01-16), and the documented
+    `@v2` path returns "no matching versions for query latest". A consumer following the published
+    install command cannot pin a release.
+- language: go
+  registry: go
+  name: github.com/cybledev/odin-cli
+  url: https://pkg.go.dev/github.com/cybledev/odin-cli
+  install: go install github.com/cybledev/odin-cli/cmd/odin@latest
+  official: true
+  version: v1.0.3
+  published: '2024-10-16'
+  repository: https://github.com/cybledev/odin-cli
+  docs: https://docs.odin.io/cli/cli
+  kind: cli

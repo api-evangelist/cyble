@@ -1,0 +1,143 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  https://docs.odin.io/api-reference/introduction, https://docs.odin.io/authentication,
+  https://docs.odin.io/status-codes, https://docs.odin.io/cli/cli, and derived from
+  openapi/cyble-odin-openapi.yml
+api: ODIN API
+base_url: https://api.odin.io/
+style: REST, resource-oriented URLs, JSON request and response bodies
+transport:
+  https_required: true
+  note: >-
+    "You must make all API calls over HTTPS. Calls made over plain HTTP will fail, as will requests
+    without authentication or without all required parameters." — docs.odin.io/api-reference/introduction
+authentication:
+  style: api-key
+  header: X-API-Key
+  docs: https://docs.odin.io/authentication
+  note: >-
+    A single custom request header. Keys are generated, enabled/disabled and deleted from the ODIN
+    console under "API and Query Limits". The OpenAPI declares the header as `X-API-Key`; the docs
+    prose writes it `X-Api-Key` and the Go SDK sends `x-api-key` — HTTP header names are
+    case-insensitive so all three interoperate, but the spelling is inconsistent across the surface.
+  see: authentication/cyble-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    No idempotency key, header or retry contract is documented anywhere in the API reference, the
+    OpenAPI, the SDKs or the CLI. This is a read-only search API — every operation is a GET or a
+    POST-as-query — so there is no write surface to make idempotent, but there is also no published
+    safe-retry guidance for the 408 and 500 responses the spec declares.
+pagination:
+  style: cursor
+  request_params:
+  - name: limit
+    in: body
+    description: Page size.
+  - name: start
+    in: body
+    description: >-
+      Opaque cursor. On the first call it is omitted; on subsequent calls it carries the value of
+      `pagination.last` from the previous response. Encoded as an array of sort-key values
+      (for example [1721808680130, 2]).
+  response_fields:
+  - pagination.last
+  - pagination.limit
+  - pagination.start
+  - pagination.total
+  schemas:
+  - SearchPagination
+  - exposed.SearchPagination
+  - dns.SearchPagination
+  - schema.PaginationMeta
+  note: >-
+    The WHOIS/domain surface uses a different pagination shape — schema.PaginationMeta carries
+    {limit, pageState} rather than {last, limit, start, total}. Three of the five datasets each
+    declare their own near-identical pagination schema instead of reusing one.
+  docs: https://docs.odin.io/cli/cli
+sorting:
+  params:
+  - sort_by
+  - sort_dir
+  values_dir: [asc, desc]
+  note: Declared on the exposed buckets and exposed files search requests (exposed.SearchRequest).
+query_language:
+  name: Lucene
+  description: >-
+    Search queries across hosts, exposed buckets, exposed files and domains use Lucene syntax over
+    400+ indexed fields, supporting ranges ("file_cat_count.src: [10 TO *]"), boolean operators, fuzzy
+    and regex matching. The queryable field registry per dataset is itself an API surface —
+    GET /v1/fields/hosts/{category}, /v1/fields/exposed/buckets, /v1/fields/exposed/files.
+  field_reference:
+  - https://docs.odin.io/field-description/hosts
+  - https://docs.odin.io/field-description/exposed-buckets
+  - https://docs.odin.io/field-description/exposed-files
+  cheat_sheets:
+  - https://docs.odin.io/queries-cheat-sheet/hosts
+  - https://docs.odin.io/queries-cheat-sheet/exposed-buckets
+  - https://docs.odin.io/queries-cheat-sheet/exposed-files
+response_envelope:
+  shape: '{ success: boolean, message: string, data: <payload>, pagination: <SearchPagination> }'
+  success_field: success
+  data_field: data
+  schemas:
+  - APIResponse
+  - exposed.APIResponse
+  - exposed.BucketAPIResponse
+  - exposed.FileAPIResponse
+  - dns.APIResponse
+  - schema.APIResponse
+  - ipservices.IpCveResponse
+  - ipservices.HostsSummaryResponse
+  note: >-
+    Seven near-identical envelope schemas, one per dataset, rather than a single shared response
+    wrapper. Ten of the twenty-seven operations declare a bare `{type: object}` response schema with
+    no properties at all.
+error_envelope:
+  shape: '{ success: false, message: string }'
+  format: proprietary
+  rfc9457: false
+  content_type: application/json
+  schemas:
+  - ErrorResponse
+  - dns.ErrorResponse
+  - tokens.ErrorResponse
+  see: errors/cyble-problem-types.yml
+  note: >-
+    Not RFC 9457 problem+json — a flat {success, message} object served as application/json. Some
+    4xx/5xx responses layer an allOf over ErrorResponse that introduces a property literally named
+    " error" with a leading space, which looks like a generator defect rather than a real field.
+quota:
+  model: credits
+  description: >-
+    Access is metered in credits/queries against the account plan rather than by a request-rate
+    window. The console exposes them under "API and Query Limits", the CLI exposes `odin credits`,
+    and the OpenAPI carries the schemas that back it — tokens.UserTokenStats {details, expires_on,
+    search}, tokens.FinalStats {left, plan}, tokens.SearchStat {bucket_file, data, host_cert}.
+  exhaustion_status: 402
+  note: >-
+    The credits/usage endpoint itself is NOT in the published OpenAPI — the schemas are declared but
+    no path exposes them, so an integrator can read their remaining balance from the CLI or console
+    but cannot discover the endpoint from the contract.
+  see: rate-limits/cyble-rate-limits.yml
+rate_limit_signaling:
+  headers: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After headers are documented, and none were returned on a
+    live unauthenticated GET https://api.odin.io/v1/ping (200, 2026-08-11). Quota exhaustion is
+    signalled by the 402 status code alone.
+request_tracing:
+  request_id_header: null
+  note: No correlation/request-id header is documented or observed.
+versioning:
+  scheme: uri-path
+  current: v1
+  note: Every path is prefixed /v1/. No version header, no date-based train, no published version policy.
+  see: lifecycle/cyble-lifecycle.yml
+cross_links:
+  authentication: authentication/cyble-authentication.yml
+  errors: errors/cyble-problem-types.yml
+  lifecycle: lifecycle/cyble-lifecycle.yml
+  rate_limits: rate-limits/cyble-rate-limits.yml
+  data_model: data-model/cyble-data-model.yml

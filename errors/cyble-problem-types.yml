@@ -1,0 +1,83 @@
+generated: '2026-08-11'
+method: derived
+source: openapi/cyble-odin-openapi.yml
+docs: https://docs.odin.io/status-codes
+format: proprietary
+rfc9457: false
+envelope:
+  content_type: application/json
+  shape: '{ success: false, message: string }'
+  schemas:
+  - ErrorResponse
+  - dns.ErrorResponse
+  - tokens.ErrorResponse
+note: >-
+  ODIN does not publish an error-code registry — there are no application-level error codes, only
+  HTTP status codes carrying a free-text `message`. The published status-code page documents five
+  statuses (200, 400, 401, 408, 500); the OpenAPI declares a sixth, 402 Payment Required, on 14 of
+  the 27 operations, and does not declare 401 on any operation. The two sources disagree in both
+  directions.
+problems:
+- status: 400
+  title: Bad Request
+  detail: >-
+    The server could not understand the request due to invalid syntax or missing parameters — a
+    client-side error. The request must be corrected before retrying. In practice this is the
+    response for a malformed Lucene query or an unknown field name.
+  schema: ErrorResponse
+  declared_on: 26 of 27 operations
+  documented: true
+- status: 401
+  title: Unauthorised
+  detail: >-
+    The request requires valid credentials — a missing, disabled, deleted or invalid X-API-Key header.
+  documented: true
+  in_openapi: false
+  gap: >-
+    Documented on the status-codes page but declared on ZERO operations in the OpenAPI, even though
+    every operation requires the X-API-Key header. A generated client will not model the auth-failure
+    path.
+- status: 402
+  title: Payment Required
+  detail: >-
+    Account query credits are exhausted or the plan does not cover the requested dataset. ODIN meters
+    access by credits rather than by a rate window, so 402 — not 429 — is the exhaustion signal.
+  schema: ErrorResponse
+  declared_on: 14 of 27 operations
+  documented: false
+  gap: >-
+    Declared in the OpenAPI but absent from the published status-codes page. This is the single most
+    operationally important status on the API for an agent or an unattended job, and it is
+    undocumented in prose.
+- status: 408
+  title: Request Timeout
+  detail: >-
+    The server did not receive a complete request within the timeout window and closed the connection.
+    On a scan-scale search backend this is also the practical signal for a query too broad to complete.
+  schema: ErrorResponse
+  declared_on: 17 of 27 operations
+  documented: true
+- status: 500
+  title: Internal Server Error
+  detail: >-
+    Unexpected server-side condition. Generic; the client should report the problem to support.
+  schema: ErrorResponse
+  declared_on: 27 of 27 operations
+  documented: true
+- status: 429
+  title: Too Many Requests
+  present: false
+  note: >-
+    Not declared on any operation and not documented. No rate-limit status, no Retry-After, no
+    RateLimit-* headers — see rate-limits/cyble-rate-limits.yml.
+observations:
+- >-
+  Several 4xx/5xx response schemas are declared as an allOf over ErrorResponse that introduces a
+  property literally named " error" — with a leading space in the property name. That is a
+  spec-generation defect, not a real wire field.
+- >-
+  Three datasets each declare their own error schema (ErrorResponse, dns.ErrorResponse,
+  tokens.ErrorResponse) with identical {success, message} shape rather than sharing one.
+- >-
+  Ten operations declare a bare `{type: object}` for their error content with no properties at all,
+  so a generated client gets an untyped blob for those failure paths.

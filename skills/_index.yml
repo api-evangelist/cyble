@@ -1,0 +1,66 @@
+generated: '2026-08-11'
+method: generated
+source: >-
+  Grounded in openapi/cyble-odin-openapi.yml (27 operations verified by method+path),
+  conventions/cyble-conventions.yml and errors/cyble-problem-types.yml. No provider-published skills
+  or AGENTS.md exist on any Cyble or ODIN host.
+api: openapi/cyble-odin-openapi.yml
+note: >-
+  The ODIN OpenAPI declares an operationId on exactly ONE of its 27 operations
+  (searchExposedBuckets). Every step in these skills is therefore anchored to the verbatim HTTP
+  method and path from the specification rather than to an operationId, so no identifier is invented.
+  Suggested operationIds for the other 26 are captured separately in
+  overlays/cyble-odin-overlay.yaml and are marked there as API Evangelist derivations.
+skills:
+- file: cyble-odin-attack-surface-sweep.md
+  name: ODIN attack-surface sweep for a domain
+  description: >-
+    Enumerate subdomains and WHOIS posture for a domain, pivot to the hosts and open services behind
+    them, then pull CVEs and known exploits.
+  api: openapi/cyble-odin-openapi.yml
+  operations:
+  - POST /v1/domain/subdomain/count
+  - POST /v1/domain/subdomain/search
+  - GET /v1/domain/whois/{domain-name}
+  - GET /v1/domain/whois/{domain-name}/historical
+  - GET /v1/fields/hosts/{category}
+  - POST /v1/hosts/search
+  - GET /v1/hosts/{ip}
+  - GET /v1/hosts/cve/{ip}
+  - GET /v1/hosts/exploits/{ip}
+  - GET /v1/hosts/cves/{ip}/{cve}
+  - GET /v1/hosts/exploits/{ip}/{cve}
+  - GET /v1/cves/all/{ip}/{page}
+- file: cyble-odin-exposed-data-hunt.md
+  name: ODIN exposed bucket and file hunt
+  description: >-
+    Find publicly exposed cloud storage buckets and drill into sensitive files, prioritising by
+    ODIN's AI/ML credential, PII and financial labels.
+  api: openapi/cyble-odin-openapi.yml
+  operations:
+  - GET /v1/fields/exposed/buckets
+  - GET /v1/fields/exposed/files
+  - POST /v1/exposed/buckets/count
+  - POST /v1/exposed/buckets/summary
+  - POST /v1/exposed/buckets/search
+  - POST /v1/exposed/files/count
+  - POST /v1/exposed/files/summary
+  - POST /v1/exposed/files/search
+- file: cyble-odin-cve-exposure-check.md
+  name: ODIN CVE exposure check across an IP range or ASN
+  description: >-
+    Determine exposure to a specific CVE across an ASN or netblock and whether a public exploit
+    exists for it.
+  api: openapi/cyble-odin-openapi.yml
+  operations:
+  - GET /v1/ping
+  - GET /v1/fields/hosts/{category}
+  - POST /v1/hosts/count
+  - POST /v1/hosts/summary
+  - POST /v1/hosts/search
+  - GET /v1/hosts/{ip}
+  - GET /v1/hosts/cve/{ip}
+  - GET /v1/hosts/cves/{ip}/{cve}
+  - GET /v1/hosts/exploits/{ip}
+  - GET /v1/hosts/exploits/{ip}/{cve}
+  - GET /v1/cves/all/{ip}/{page}

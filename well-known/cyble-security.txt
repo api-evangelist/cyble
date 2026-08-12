@@ -1,0 +1,5 @@
+# Reporting Security vulnerabilities to Cyble
+Contact: https://cyble.com/security-disclosure-policy
+Policy: https://cyble.com/security-disclosure-policy
+Preferred-Languages: en
+Expires: 2027-05-01T12:30:00.000Z

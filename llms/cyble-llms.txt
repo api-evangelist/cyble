@@ -1,0 +1,54 @@
+# Odin by Cyble Documentation
+
+## Docs
+
+- [Introduction](https://docs.odin.io/introduction.md): Powerful Internet Scanning Engine
+- [Authentication](https://docs.odin.io/authentication.md)
+- [Hosts](https://docs.odin.io/field-description/hosts.md)
+- [Buckets](https://docs.odin.io/field-description/exposed-buckets.md)
+- [Exposed Files](https://docs.odin.io/field-description/exposed-files.md)
+- [Hosts](https://docs.odin.io/queries-cheat-sheet/hosts.md)
+- [Exposed Buckets](https://docs.odin.io/queries-cheat-sheet/exposed-buckets.md)
+- [Exposed Files](https://docs.odin.io/queries-cheat-sheet/exposed-files.md)
+- [Status Codes](https://docs.odin.io/status-codes.md)
+- [API Introduction](https://docs.odin.io/api-reference/introduction.md): Details on the ODIN API
+- [Search hosts](https://docs.odin.io/api-reference/hosts/search-hosts.md): Get the detailed list of hosts based on query
+- [Get summary](https://docs.odin.io/api-reference/hosts/get-summary.md): Get the summary of hosts based on the field
+- [Get the record count](https://docs.odin.io/api-reference/hosts/get-the-record-count.md): Returns the total no of records based on query
+- [Get cve details](https://docs.odin.io/api-reference/hosts/get-cve-details.md): Get the detailed cve details for ip based on page
+- [Get ip cve details](https://docs.odin.io/api-reference/hosts/get-ip-cve-details.md): Get detailed lost of cve ips
+- [Get cve](https://docs.odin.io/api-reference/hosts/get-cve.md): Get the detailed cve based on ip and cve
+- [Get exploits for ip](https://docs.odin.io/api-reference/hosts/get-exploits-for-ip.md): Get the detailed list of exploits for the ip
+- [Get the latest ip details](https://docs.odin.io/api-reference/hosts/get-the-latest-ip-details.md): Get the complete and latest ip details
+- [Search exposed buckets](https://docs.odin.io/api-reference/exposedbuckets/search-exposed-buckets.md): Search exposed buckets according to provided filters Search across categories "img, aud, vid, font, doc, src, web, bkup, dbdump" Search across labels "credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable" Search across providers "aws, gcp, do, lin…
+- [Get exposed buckets summary](https://docs.odin.io/api-reference/exposedbuckets/get-exposed-buckets-summary.md): Get Returns exposed buckets aggregated count according to filters
+- [Get exposed bucket count](https://docs.odin.io/api-reference/exposedbuckets/get-exposed-bucket-count.md): Get exposed bucket count according to provided filters
+- [Search exposed files](https://docs.odin.io/api-reference/exposedfiles/search-exposed-files.md): Search exposed files using advanved filters Search across categories "img, aud, vid, font, txt, doc, src, db, march, arch, 3d, exec, key, cert" Search across labels "credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable" Search across providers "aw…
+- [Get file summary](https://docs.odin.io/api-reference/exposedfiles/get-file-summary.md): Returns a summary of exposed bucket files according to provided filters
+- [Get file count](https://docs.odin.io/api-reference/exposedfiles/get-file-count.md): Returns overall count of exposed bucket files according to filters
+- [Search domains](https://docs.odin.io/api-reference/domain/search-domains.md): Search domains based on the query
+- [Get domains count](https://docs.odin.io/api-reference/domain/get-domains-count.md): Get count of domain records based on query
+- [Fetch the subdomain record](https://docs.odin.io/api-reference/domain/fetch-the-subdomain-record.md): Returns the subdomain records based on query
+- [Fetch the total no. of subdomain records](https://docs.odin.io/api-reference/domain/fetch-the-total-no-of-subdomain-records.md): Returns the count of subdomain records based on domain
+- [Fetch the domain whois record details](https://docs.odin.io/api-reference/domain/fetch-the-domain-whois-record-details.md): Provides extensive details about the domain whois record like name servers, domain status, registrar, etc.
+- [Fetch all the domain whois historical records](https://docs.odin.io/api-reference/domain/fetch-all-the-domain-whois-historical-records.md): Provides historical details about the domain whois record like name servers, domain status, registrar, etc
+- [Get the expiry for a particular domain](https://docs.odin.io/api-reference/domain/get-the-expiry-for-a-particular-domain.md): Provides historical details about the domain whois record like name servers, domain status, registrar, etc
+- [Fetch all the domain whois historical records](https://docs.odin.io/api-reference/domain/fetch-all-the-domain-whois-historical-records-1.md): Provides historical details about the domain whois record like name servers, domain status, registrar, etc
+- [Get the fields for exposed buckets](https://docs.odin.io/api-reference/fields/get-the-fields-for-exposed.md): Get the list of fields that can be used to query on exposed buckets
+- [Get the fields for exposed files](https://docs.odin.io/api-reference/fields/get-the-fields-data.md): Returns the exposed files fields data
+- [Get the fields for hosts](https://docs.odin.io/api-reference/fields/get-the-fields-for-hosts.md): Get the list of fields to query on host
+- [Health check](https://docs.odin.io/api-reference/health/health-check.md): Returns the pong as response
+- [Go](https://docs.odin.io/sdks/go.md): A Go SDK for interacting with the Odin API for cybersecurity and threat detection
+- [JS](https://docs.odin.io/sdks/js.md): A comprehensive SDK for interacting with the Odin API for cybersecurity and internet threat detection
+- [Python](https://docs.odin.io/sdks/python.md): A comprehensive SDK for cybersecurity threat detection and internet surface analysis
+- [Odin CLI](https://docs.odin.io/cli/cli.md)
+- [Try in Postman](https://docs.odin.io/postman/postman.md): Import the forked collection directly into Postman
+
+## OpenAPI Specs
+
+- [openapi](https://docs.odin.io/openapi.yaml)
+
+## Optional
+
+- [Website](https://odin.io/)
+- [Community](https://search.odin.io/community)

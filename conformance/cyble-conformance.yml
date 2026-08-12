@@ -1,0 +1,107 @@
+generated: '2026-08-11'
+method: derived
+source: >-
+  openapi/cyble-odin-openapi.yml, https://docs.odin.io/api-reference/introduction,
+  https://docs.odin.io/status-codes, security/cyble-trust-center.yml,
+  security/cyble-domain-security.yml
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    Publishes an OpenAPI 3.0.1 document at https://docs.odin.io/openapi.yaml covering all 27
+    operations. The API reference explicitly states "Our API also conforms to the OpenAPI
+    Specification."
+- id: rest
+  conforms: true
+  evidence: >-
+    "The ODIN API v1 is organized around REST. Our API has resource-oriented URLs, accepts and returns
+    JSON in most cases, and the API uses standard HTTP response codes, authentication, and verbs."
+  note: >-
+    Partial in practice — search is expressed as POST with a JSON query body rather than as a
+    cacheable GET, which is a common and defensible deviation for query-heavy search APIs.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme in the OpenAPI and no OAuth flow documented. Auth is a static API key header.
+- id: oidc
+  conforms: false
+  evidence: No openIdConnect scheme; /.well-known/openid-configuration 404s on every host probed.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are a proprietary flat {success, message} object served as application/json. No
+    application/problem+json media type appears anywhere in the spec.
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: >-
+    Served at https://cyble.com/.well-known/security.txt and https://odin.io/.well-known/security.txt
+    (both HTTP 200) with Contact, Policy, Preferred-Languages and Expires fields.
+  note: >-
+    The odin.io copy misspells the field as "Prefferred-Languages"; the cyble.com copy spells it
+    correctly. Neither declares Encryption or Canonical.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support documented; no deprecation policy published.
+- id: rfc9238-ratelimit-headers
+  conforms: false
+  evidence: >-
+    No RateLimit-* or X-RateLimit-* headers documented or observed on a live response. Quota
+    exhaustion is signalled by HTTP 402 alone.
+- id: idempotency-key
+  conforms: false
+  evidence: No idempotency key or safe-retry contract documented. Read-only API surface.
+- id: cursor-pagination
+  conforms: true
+  evidence: >-
+    Cursor pagination on all search operations — request {limit, start}, response
+    pagination {last, limit, start, total}, with pagination.last fed back as the next start.
+  note: The WHOIS/domain surface uses a different {limit, pageState} shape, so pagination is not uniform.
+- id: json-api
+  conforms: false
+  evidence: Responses use a proprietary {success, message, data, pagination} envelope, not JSON:API.
+- id: a2a
+  conforms: partial
+  evidence: >-
+    An A2A agent card is served at https://docs.odin.io/.well-known/agent-card.json (HTTP 200,
+    application/json). Graded `flavored` against A2A 1.0.0 — it uses the pre-1.0.0
+    `supportedInterfaces` key and publishes zero skills.
+  see: a2a/cyble-a2a.yml
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    A complete llms.txt index is served at https://docs.odin.io/llms.txt (HTTP 200) listing every
+    documentation page, every API-reference operation, the SDK pages and the OpenAPI URL. Each page
+    also has a .md twin. There is no llms-full.txt (404).
+- id: mcp
+  conforms: false
+  evidence: >-
+    github.com/cybledev/odin-mcp-server is publicly announced as "Odin's Official MCP Server" but the
+    repository contains a LICENSE file and nothing else — no server implementation, no manifest, no
+    hosted endpoint. See mcp/cyble-mcp.yml.
+compliance_program:
+  published: true
+  url: https://trust.cyble.com/
+  certifications:
+  - SOC 2 Type II
+  - ISO/IEC 27001:2022
+  - GDPR
+  documents:
+  - Penetration Test Report (2025, independent third party)
+  - SOC 2 Report
+  - Data Processing Agreement
+  - Subprocessors list
+  - Cyber insurance documentation
+  note: >-
+    Corporate compliance posture is published on a SafeBase-hosted trust portal. Note this is a
+    company-level program covering Cyble Inc.; it is not an API-level conformance claim about ODIN.
+  see: security/cyble-trust-center.yml
+transport_security:
+  https_required: true
+  hsts:
+    cyble.com: 'max-age=15552000'
+    docs.odin.io: 'max-age=63072000'
+    api.odin.io: null
+  note: >-
+    api.odin.io — the host every integration calls — returns no Strict-Transport-Security header,
+    while both the marketing and docs hosts do. odin.io has no DNSSEC; cyble.com does. Neither
+    domain publishes a CAA record.
+  see: security/cyble-domain-security.yml

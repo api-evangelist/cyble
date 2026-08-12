@@ -1,0 +1,32 @@
+generated: '2026-08-11'
+method: searched
+source: https://search.odin.io/pricing
+plan_count: 0
+plans: []
+note: >-
+  ODIN publishes a pricing page at https://search.odin.io/pricing (HTTP 200, real titled document —
+  "ODIN Pricing - Powerful Internet Scanning Search Engine"), but the tier table is rendered entirely
+  client-side. The served HTML contains no plan name, no price, no currency, no billing period and no
+  credit allowance — a full-text scan of the 592KB response for "per month", "/month", "credits",
+  "queries", "Free", "Enterprise", "Contact Sales" and "plan" returns zero matches outside the nav
+  and footer chrome. No machine-readable pricing or catalog endpoint answers either
+  (search.odin.io/api/plans and /api/pricing both return the SPA shell; api.odin.io/v1/plans returns
+  404). plan_count is therefore an honest zero: plans exist and are sold, but nothing about them is
+  readable by a machine, and an agent cannot determine cost before calling.
+  Third-party reviews describe a subscription model with tiered data access and enterprise
+  customisation; that is not a provider-published fact and is not recorded here as one.
+evidence:
+- url: https://search.odin.io/pricing
+  status: 200
+  finding: JS-rendered; no tier content in the served HTML
+- url: https://search.odin.io/api/plans
+  status: 200
+  finding: returns the SPA HTML shell, not JSON
+- url: https://api.odin.io/v1/plans
+  status: 404
+  finding: no plans endpoint on the API host
+quota_context:
+  note: >-
+    Metering is by credits, not by request rate. The per-plan credit allowance is shown only inside
+    the authenticated console under "API and Query Limits".
+  see: rate-limits/cyble-rate-limits.yml

@@ -1,0 +1,57 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  https://docs.odin.io/api-reference/introduction, https://status.odin.io,
+  https://search.odin.io/terms-of-service, and derived from openapi/cyble-odin-openapi.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://docs.odin.io/api-reference/introduction
+  note: >-
+    Every one of the 27 paths is prefixed /v1/. The docs refer to "The ODIN API v1". No version
+    negotiation header, no date-pinned version train, and no published policy describing what
+    constitutes a breaking change or how long a version is supported.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy is published anywhere on the developer surface, and no operation in the
+    OpenAPI carries `deprecated: true`. RFC 8594 Sunset/Deprecation header support is not documented
+    and was not observed.
+deprecated_operations: []
+status_page:
+  url: https://status.odin.io
+  provider: Better Stack
+  scope: >-
+    A single monitored component — "Web / odin.io" — reporting 100% uptime with a rolling
+    four-day-bucket history back to August 2025, plus a maintenance calendar, a previous-incidents
+    log and a subscribe form.
+  gap: >-
+    The status page monitors the odin.io web property only. api.odin.io — the host every integration
+    actually calls — is not a listed component, so an API consumer cannot use this page to tell
+    whether the API is up.
+  probed: '2026-08-11'
+  http_status: 200
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No published uptime target or SLA on the public surface. The Terms of Service at
+    search.odin.io/terms-of-service govern the free/self-serve tier; enterprise terms are contractual.
+changelog:
+  url: null
+  note: >-
+    No changelog or release-notes page exists. https://search.odin.io/changelog returns HTTP 200 but
+    is a Next.js soft-404 — it renders an empty document with no <title>, byte-identical in shape to
+    a control request for /definitely-not-a-real-page-zzz123 (both ~378KB, both title-less), whereas
+    real pages such as /pricing and /terms-of-service return titled documents. Recorded as absent,
+    not present.
+sdk_currency:
+  note: >-
+    The strongest decay signal on this provider is registry-dated. The Python and JavaScript SDKs
+    both last published 2.0.1 on 2024-08-10; the Go CLI last tagged v1.0.3 on 2024-10-16; the Go SDK
+    has never cut a semver tag and the documented `@v2` import path does not resolve in the module
+    proxy. The API is live and answering, but the first-party client libraries have not shipped in
+    roughly two years.
+  see: packages/cyble-packages.yml

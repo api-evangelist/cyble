@@ -1,0 +1,6 @@
+# Reporting Security vulnerabilities to Cyble
+# Please report any security vulnerabilities to us via the contact method(s) below, only after reading our disclosure policy.
+Contact: https://cyble.com/security-disclosure-policy
+Policy: https://cyble.com/security-disclosure-policy
+Prefferred-Languages: en
+Expires: 2027-05-01T12:30:00.000Z

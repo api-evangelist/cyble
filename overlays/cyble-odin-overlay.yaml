@@ -1,0 +1,167 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the ODIN API
+  version: 1.0.0
+extends: openapi/cyble-odin-openapi.yml
+x-generated: '2026-08-11'
+x-method: generated
+x-source: >-
+  Derived from the harvested openapi/_original/cyble-odin-openapi-original.yml plus the repo
+  artifacts. Captures API Evangelist annotations and the contract gaps found during enrichment.
+  The original specification is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apievangelist.com/providers/cyble
+    x-apievangelist-enriched: '2026-08-11'
+    x-provider: Cyble Inc.
+    x-product: ODIN
+    x-documentation: https://docs.odin.io/api-reference/introduction
+    x-llms-txt: https://docs.odin.io/llms.txt
+    contact:
+      name: Cyble Support
+      url: https://search.odin.io/community
+    x-apievangelist-notes:
+    - No operationIds on 26 of 27 operations - only searchExposedBuckets carries one.
+    - No tags[] declaration at the document root, though every operation is tagged.
+    - No security requirement declared at the document root despite every operation requiring X-API-Key.
+- target: $.tags
+  update:
+  - name: Hosts
+    description: IPv4 scan results across 500+ ports with ASN, geolocation, CVE and exploit enrichment.
+  - name: ExposedBuckets
+    description: Cloud storage buckets discovered open on the internet, AI/ML-labelled and categorised.
+  - name: ExposedFiles
+    description: Files harvested from exposed buckets, categorised and labelled by sensitivity.
+  - name: domain
+    description: Domain and subdomain search plus current and historical WHOIS records.
+  - name: Fields
+    description: The queryable field registry per dataset that makes Lucene queries writable.
+  - name: Health
+    description: API server liveness.
+- target: $.security
+  update:
+  - ApiKeyAuth: []
+- target: $.servers
+  update:
+  - url: https://api.odin.io/
+    description: Production. HTTPS only - plain HTTP requests fail.
+- target: $.components.securitySchemes.ApiKeyAuth
+  update:
+    description: >-
+      API key issued from the ODIN console under "API and Query Limits"
+      (https://search.odin.io/ -> profile -> API and Query Limits). Keys can be enabled, disabled or
+      deleted individually. The docs prose writes the header X-Api-Key and the Go SDK sends
+      x-api-key; HTTP header names are case-insensitive so all spellings interoperate.
+    x-key-management: https://docs.odin.io/authentication
+- target: $.paths['/v1/hosts/search'].post
+  update:
+    operationId: searchHosts
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/hosts/count'].post
+  update:
+    operationId: countHosts
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/hosts/summary'].post
+  update:
+    operationId: summarizeHosts
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/hosts/{ip}'].get
+  update:
+    operationId: getHost
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/hosts/cve/{ip}'].get
+  update:
+    operationId: getHostCves
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/hosts/cves/{ip}/{cve}'].get
+  update:
+    operationId: getHostCve
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/hosts/exploits/{ip}'].get
+  update:
+    operationId: getHostExploits
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/hosts/exploits/{ip}/{cve}'].get
+  update:
+    operationId: getHostCveExploits
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/cves/all/{ip}/{page}'].get
+  update:
+    operationId: listHostCveDetails
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/exposed/buckets/count'].post
+  update:
+    operationId: countExposedBuckets
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/exposed/buckets/summary'].post
+  update:
+    operationId: summarizeExposedBuckets
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/exposed/files/search'].post
+  update:
+    operationId: searchExposedFiles
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/exposed/files/count'].post
+  update:
+    operationId: countExposedFiles
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/exposed/files/summary'].post
+  update:
+    operationId: summarizeExposedFiles
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/search'].post
+  update:
+    operationId: searchDomains
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/count'].post
+  update:
+    operationId: countDomains
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/subdomain/search'].post
+  update:
+    operationId: searchSubdomains
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/subdomain/count'].post
+  update:
+    operationId: countSubdomains
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/whois/{domain-name}'].get
+  update:
+    operationId: getDomainWhois
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/whois/{domain-name}/historical'].get
+  update:
+    operationId: getDomainWhoisHistory
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/whois/{domain-name}/is-expired'].get
+  update:
+    operationId: isDomainExpired
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/domain/whois/{domain-name}/is-registered'].get
+  update:
+    operationId: isDomainRegistered
+    x-apievangelist-derived-operation-id: true
+    summary: Check whether a domain is registered
+    x-apievangelist-note: >-
+      The published summary on this operation reads "Fetch all the domain whois historical records",
+      duplicating the /historical operation. The path and the docs index both indicate a
+      registration check.
+- target: $.paths['/v1/fields/exposed/buckets'].get
+  update:
+    operationId: listExposedBucketFields
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/fields/exposed/files'].get
+  update:
+    operationId: listExposedFileFields
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/fields/hosts/{category}'].get
+  update:
+    operationId: listHostFields
+    x-apievangelist-derived-operation-id: true
+- target: $.paths['/v1/ping'].get
+  update:
+    operationId: healthCheck
+    x-apievangelist-derived-operation-id: true
+    x-unauthenticated: true
+    x-apievangelist-note: Verified live on 2026-08-11 - returns 200 "pong" with no API key.

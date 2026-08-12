@@ -1,0 +1,64 @@
+generated: '2026-08-11'
+method: searched
+source: >-
+  https://docs.odin.io/api-reference/introduction, https://docs.odin.io/status-codes,
+  https://docs.odin.io/authentication, https://docs.odin.io/cli/cli, live probe of
+  https://api.odin.io/v1/ping on 2026-08-11
+limit_count: 0
+limits: []
+note: >-
+  ODIN publishes NO numeric rate limits. Access is metered by account credits/queries rather than by
+  a request-rate window, and the credit allowances per plan are not published — the console page that
+  holds them is titled "API and Query Limits" and sits behind login. No published limit could be
+  recorded, so limit_count is an honest zero rather than an omitted file.
+quota_model:
+  type: credits
+  enforcement_status: 402
+  enforcement_note: >-
+    HTTP 402 Payment Required is declared on 14 of the 27 operations and is the exhaustion signal.
+    No 429 is declared or documented anywhere on the API.
+  visible_to_customer:
+  - surface: console
+    url: https://search.odin.io/
+    path: profile menu -> "API and Query Limits"
+    auth: required
+  - surface: cli
+    command: odin credits
+    description: Get the account related remaining and used credits details
+  spec_schemas:
+  - tokens.UserTokenStats
+  - tokens.FinalStats
+  - tokens.SearchStat
+  - tokens.DetailStat
+  spec_gap: >-
+    The OpenAPI declares the credit-accounting schemas (tokens.UserTokenStats {details, expires_on,
+    search}, tokens.FinalStats {left, plan}, tokens.SearchStat {bucket_file, data, host_cert}) but
+    exposes NO path that returns them. The CLI has a `credits` command, so the endpoint exists — it is
+    simply not in the published contract. An integrator cannot discover their remaining balance from
+    the specification.
+response_headers:
+  observed: []
+  documented: []
+  probe:
+    url: https://api.odin.io/v1/ping
+    method: GET
+    auth: none
+    http_status: 200
+    date: '2026-08-11'
+    headers_returned:
+    - date
+    - content-type
+    - content-length
+    - vary
+    - access-control-allow-credentials
+    - x-frame-options
+    - cf-cache-status
+    - nel
+    - strict-transport-security
+    - report-to
+    - server
+    - cf-ray
+  note: >-
+    No X-RateLimit-*, no RateLimit-* (RFC 9238 draft), no Retry-After. An agent calling this API has
+    no runtime signal for how much budget is left or when to back off — it discovers exhaustion only
+    by receiving a 402 mid-run.
