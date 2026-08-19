@@ -2,29 +2,30 @@ generated: '2026-08-11'
 method: searched
 status: none
 server: null
-note: >-
-  NO MCP SERVER IS SHIPPED. Cyble publishes a public repository at
-  https://github.com/cybledev/odin-mcp-server described as "Odin's Official MCP Server", but the
-  repository is empty — the full recursive git tree at refs/heads/main contains exactly one file,
-  LICENSE. There is no server implementation, no package, no manifest and no hosted endpoint. The
-  repository was last pushed 2025-07-08. No MCP endpoint responds on any ODIN or Cyble host, no
-  MCP server is listed in the docs, the llms.txt index or any registry, and no /.well-known/
-  oauth-protected-resource or oauth-authorization-server document is served (see
-  well-known/cyble-well-known.yml — every path 404s on all four hosts).
-  Because no MCP server exists, NO `type: MCPServer` pointer is emitted in apis.yml and no tool
-  crosswalk is derived. A candidate tool list generated from the 27 OpenAPI operations would assert
-  an agent surface Cyble does not serve.
+note: 'NO MCP SERVER IS SHIPPED. Cyble publishes a public repository at https://github.com/cybledev/odin-mcp-server
+  described as "Odin''s Official MCP Server", but the repository is empty — the full recursive git tree
+  at refs/heads/main contains exactly one file, LICENSE. There is no server implementation, no package,
+  no manifest and no hosted endpoint. The repository was last pushed 2025-07-08. No MCP endpoint responds
+  on any ODIN or Cyble host, no MCP server is listed in the docs, the llms.txt index or any registry,
+  and no /.well-known/ oauth-protected-resource or oauth-authorization-server document is served (see
+  well-known/cyble-well-known.yml — every path 404s on all four hosts). Because no MCP server exists,
+  NO `type: MCPServer` pointer is emitted in apis.yml and no tool crosswalk is derived. A candidate tool
+  list generated from the 27 OpenAPI operations would assert an agent surface Cyble does not serve.'
 evidence:
 - url: https://api.github.com/repos/cybledev/odin-mcp-server/git/trees/main?recursive=1
   status: 200
   finding: tree contains one entry - LICENSE
 - url: https://api.github.com/repos/cybledev/odin-mcp-server
   status: 200
-  finding: 'description "Odin''s Official MCP Server"; size 1; homepage null; pushed_at 2025-07-08'
+  finding: description "Odin's Official MCP Server"; size 1; homepage null; pushed_at 2025-07-08
 - url: https://raw.githubusercontent.com/cybledev/odin-mcp-server/main/README.md
   status: 404
   finding: no README
-provider_action: >-
-  Publishing an MCP server over the existing 27 REST operations is the single highest-value agent
-  surface Cyble is not shipping — the OpenAPI already supplies the input schemas, and the repository
+provider_action: Publishing an MCP server over the existing 27 REST operations is the single highest-value
+  agent surface Cyble is not shipping — the OpenAPI already supplies the input schemas, and the repository
   name has been public for over a year.
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census

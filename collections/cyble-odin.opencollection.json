@@ -1,0 +1,599 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Odin",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Hosts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get cve details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/cves/all/:ip/:page",
+            "params": [
+              {
+                "name": "ip",
+                "value": "",
+                "type": "path",
+                "description": "get the ip"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "path",
+                "description": "get the page"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the detailed cve details for ip based on page"
+        },
+        {
+          "info": {
+            "name": "Get the record count",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/hosts/count",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the total no of records based on query"
+        },
+        {
+          "info": {
+            "name": "Get ip cve details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/hosts/cve/:ip",
+            "params": [
+              {
+                "name": "ip",
+                "value": "",
+                "type": "path",
+                "description": "get the ip"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get detailed lost of cve ips"
+        },
+        {
+          "info": {
+            "name": "Get cve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/hosts/cves/:ip/:cve",
+            "params": [
+              {
+                "name": "ip",
+                "value": "",
+                "type": "path",
+                "description": "host ip ip"
+              },
+              {
+                "name": "cve",
+                "value": "",
+                "type": "path",
+                "description": "cve id"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the detailed cve based on ip and cve"
+        },
+        {
+          "info": {
+            "name": "Get exploits for ip",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/hosts/exploits/:ip",
+            "params": [
+              {
+                "name": "ip",
+                "value": "",
+                "type": "path",
+                "description": "get the ip"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the detailed list of exploits for the ip"
+        },
+        {
+          "info": {
+            "name": "Get exploits for ip and cve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/hosts/exploits/:ip/:cve",
+            "params": [
+              {
+                "name": "ip",
+                "value": "",
+                "type": "path",
+                "description": "ip address of the host"
+              },
+              {
+                "name": "cve",
+                "value": "",
+                "type": "path",
+                "description": "cve id"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the detailed exploit details for ip and cve"
+        },
+        {
+          "info": {
+            "name": "Search hosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/hosts/search",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the detailed list of hosts based on query"
+        },
+        {
+          "info": {
+            "name": "Get summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/hosts/summary",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the summary of hosts based on the field"
+        },
+        {
+          "info": {
+            "name": "Get the latest ip details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/hosts/:ip",
+            "params": [
+              {
+                "name": "ip",
+                "value": "",
+                "type": "path",
+                "description": "get the ip"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the complete and latest ip details"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "domain",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get domains count",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/domain/count"
+          },
+          "docs": "Get count of domain records based on query"
+        },
+        {
+          "info": {
+            "name": "Search domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/domain/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search domains based on the query"
+        },
+        {
+          "info": {
+            "name": "Fetch the total no. of subdomain records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/domain/subdomain/count",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the count of subdomain records based on domain"
+        },
+        {
+          "info": {
+            "name": "Fetch the subdomain record",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/domain/subdomain/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the subdomain records based on query"
+        },
+        {
+          "info": {
+            "name": "Fetch the domain whois record details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/domain/whois/:domain-name",
+            "params": [
+              {
+                "name": "domain-name",
+                "value": "",
+                "type": "path",
+                "description": "domain"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides extensive details about the domain whois record like name servers, domain status, registrar, etc."
+        },
+        {
+          "info": {
+            "name": "Fetch all the domain whois historical records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/domain/whois/:domain-name/historical",
+            "params": [
+              {
+                "name": "domain-name",
+                "value": "",
+                "type": "path",
+                "description": "domain"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides historical details about the domain whois record like name servers, domain status, registrar, etc"
+        },
+        {
+          "info": {
+            "name": "Get the expiry for a particular domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/domain/whois/:domain-name/is-expired",
+            "params": [
+              {
+                "name": "domain-name",
+                "value": "",
+                "type": "path",
+                "description": "domain"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides historical details about the domain whois record like name servers, domain status, registrar, etc"
+        },
+        {
+          "info": {
+            "name": "Fetch all the domain whois historical records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/domain/whois/:domain-name/is-registered",
+            "params": [
+              {
+                "name": "domain-name",
+                "value": "",
+                "type": "path",
+                "description": "domain"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Provides historical details about the domain whois record like name servers, domain status, registrar, etc"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ExposedBuckets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get exposed bucket count",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/exposed/buckets/count",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get exposed bucket count according to provided filters"
+        },
+        {
+          "info": {
+            "name": "Search exposed buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/exposed/buckets/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Search exposed buckets according to provided filters\nSearch across categories \"img, aud, vid, font, doc, src, web, bkup, dbdump\"\nSearch across labels \"credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable\"\nSearch across providers \"aws, gcp, do, linode\""
+        },
+        {
+          "info": {
+            "name": "Get exposed buckets summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/exposed/buckets/summary",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Returns exposed buckets aggregated count according to filters"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ExposedFiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get file count",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/exposed/files/count",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns overall count of exposed bucket files according to filters"
+        },
+        {
+          "info": {
+            "name": "Search exposed files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/exposed/files/search",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Search exposed files using advanved filters\nSearch across categories \"img, aud, vid, font, txt, doc, src, db, march, arch, 3d, exec, key, cert\"\nSearch across labels \"credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable\"\nSearch across providers \"aws, gcp, do, linode\""
+        },
+        {
+          "info": {
+            "name": "Get file summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.odin.io/v1/exposed/files/summary",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a summary of exposed bucket files according to provided filters"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the fields for exposed buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/fields/exposed/buckets"
+          },
+          "docs": "Get the list of fields that can be used to query on exposed buckets"
+        },
+        {
+          "info": {
+            "name": "Get the fields for exposed files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/fields/exposed/files"
+          },
+          "docs": "Returns the exposed files fields data"
+        },
+        {
+          "info": {
+            "name": "Get the fields for hosts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/fields/hosts/:category",
+            "params": [
+              {
+                "name": "category",
+                "value": "",
+                "type": "path",
+                "description": "get the category"
+              }
+            ]
+          },
+          "docs": "Get the list of fields to query on host"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.odin.io/v1/ping"
+          },
+          "docs": "Returns the pong as response"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
