@@ -17,6 +17,19 @@ specificationVersion: '0.23'
 created: '2026-08-11'
 modified: '2026-08-11'
 tags:
+- Threat Intelligence
+- Cybersecurity
+- Attack Surface Management
+- Internet Scanning
+- Dark Web Monitoring
+- Vulnerability Management
+- CVE
+- exposed-buckets
+- Domain Intelligence
+- WHOIS
+- OSINT
+- Security
+tags_raw:
 - threat-intelligence
 - cybersecurity
 - attack-surface-management
@@ -41,6 +54,15 @@ apis:
   humanURL: https://docs.odin.io/api-reference/introduction
   baseURL: https://api.odin.io/
   tags:
+  - Threat Intelligence
+  - Internet Scanning
+  - Attack Surface Management
+  - CVE
+  - exposed-buckets
+  - Domain Intelligence
+  - WHOIS
+  - OSINT
+  tags_raw:
   - threat-intelligence
   - internet-scanning
   - attack-surface-management
