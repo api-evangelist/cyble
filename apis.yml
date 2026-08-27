@@ -43,37 +43,16 @@ tags_raw:
 - osint
 - security
 apis:
-- name: ODIN API
-  description: REST API for ODIN, Cyble's internet-scanning search engine. Twenty-seven operations across five datasets
-    — Hosts (IPv4 scan results, services, ASN/geo enrichment, CVEs and exploits), Exposed Buckets (AI/ML-labelled
-    cloud storage across AWS/GCP/Azure/DigitalOcean/Akamai/Linode/Alibaba/IBM), Exposed Files (categorised and labelled
-    files harvested from exposed buckets), Domains (search, subdomains, WHOIS current and historical, registration
-    and expiry checks), and Fields (the queryable field registry per dataset) — plus a health check. Queries use
-    Lucene syntax over 400+ fields. Authentication is a single X-API-Key request header issued from the ODIN search
-    console; all calls must be made over HTTPS.
+- aid: cyble:cyble-domain-api
+  name: Cyble Domain API
+  description: The domain API from Cyble — 8 operation(s) for domain.
   humanURL: https://docs.odin.io/api-reference/introduction
   baseURL: https://api.odin.io/
   tags:
-  - Threat Intelligence
-  - Internet Scanning
-  - Attack Surface Management
-  - CVE
-  - exposed-buckets
-  - Domain Intelligence
-  - WHOIS
-  - OSINT
-  tags_raw:
-  - threat-intelligence
-  - internet-scanning
-  - attack-surface-management
-  - cve
-  - exposed-buckets
-  - domain-intelligence
-  - whois
-  - osint
+  - domain
   properties:
   - type: OpenAPI
-    url: openapi/cyble-odin-openapi.yml
+    url: openapi/cyble-domain-api-openapi.yml
   - type: Documentation
     url: https://docs.odin.io/introduction
   - type: APIReference
@@ -86,8 +65,126 @@ apis:
     url: errors/cyble-problem-types.yml
   - type: DataModel
     url: data-model/cyble-data-model.yml
-  - type: Overlay
-    url: overlays/cyble-odin-overlay.yaml
+  - type: Postman
+    url: https://www.postman.com/cybleai/cyble-odin-public/overview
+- aid: cyble:cyble-exposedbuckets-api
+  name: Cyble Exposed Buckets API
+  description: The ExposedBuckets API from Cyble — 3 operation(s) for exposedbuckets.
+  humanURL: https://docs.odin.io/api-reference/introduction
+  baseURL: https://api.odin.io/
+  tags:
+  - ExposedBuckets
+  properties:
+  - type: OpenAPI
+    url: openapi/cyble-exposedbuckets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.odin.io/introduction
+  - type: APIReference
+    url: https://docs.odin.io/api-reference/introduction
+  - type: Authentication
+    url: authentication/cyble-authentication.yml
+  - type: Conventions
+    url: conventions/cyble-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cyble-problem-types.yml
+  - type: DataModel
+    url: data-model/cyble-data-model.yml
+  - type: Postman
+    url: https://www.postman.com/cybleai/cyble-odin-public/overview
+- aid: cyble:cyble-exposedfiles-api
+  name: Cyble Exposed Files API
+  description: The ExposedFiles API from Cyble — 3 operation(s) for exposedfiles.
+  humanURL: https://docs.odin.io/api-reference/introduction
+  baseURL: https://api.odin.io/
+  tags:
+  - ExposedFiles
+  properties:
+  - type: OpenAPI
+    url: openapi/cyble-exposedfiles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.odin.io/introduction
+  - type: APIReference
+    url: https://docs.odin.io/api-reference/introduction
+  - type: Authentication
+    url: authentication/cyble-authentication.yml
+  - type: Conventions
+    url: conventions/cyble-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cyble-problem-types.yml
+  - type: DataModel
+    url: data-model/cyble-data-model.yml
+  - type: Postman
+    url: https://www.postman.com/cybleai/cyble-odin-public/overview
+- aid: cyble:cyble-fields-api
+  name: Cyble Fields API
+  description: The Fields API from Cyble — 3 operation(s) for fields.
+  humanURL: https://docs.odin.io/api-reference/introduction
+  baseURL: https://api.odin.io/
+  tags:
+  - Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/cyble-fields-api-openapi.yml
+  - type: Documentation
+    url: https://docs.odin.io/introduction
+  - type: APIReference
+    url: https://docs.odin.io/api-reference/introduction
+  - type: Authentication
+    url: authentication/cyble-authentication.yml
+  - type: Conventions
+    url: conventions/cyble-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cyble-problem-types.yml
+  - type: DataModel
+    url: data-model/cyble-data-model.yml
+  - type: Postman
+    url: https://www.postman.com/cybleai/cyble-odin-public/overview
+- aid: cyble:cyble-health-api
+  name: Cyble Health API
+  description: The Health API from Cyble — 1 operation(s) for health.
+  humanURL: https://docs.odin.io/api-reference/introduction
+  baseURL: https://api.odin.io/
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/cyble-health-api-openapi.yml
+  - type: Documentation
+    url: https://docs.odin.io/introduction
+  - type: APIReference
+    url: https://docs.odin.io/api-reference/introduction
+  - type: Authentication
+    url: authentication/cyble-authentication.yml
+  - type: Conventions
+    url: conventions/cyble-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cyble-problem-types.yml
+  - type: DataModel
+    url: data-model/cyble-data-model.yml
+  - type: Postman
+    url: https://www.postman.com/cybleai/cyble-odin-public/overview
+- aid: cyble:cyble-hosts-api
+  name: Cyble Hosts API
+  description: The Hosts API from Cyble — 9 operation(s) for hosts.
+  humanURL: https://docs.odin.io/api-reference/introduction
+  baseURL: https://api.odin.io/
+  tags:
+  - Hosts
+  properties:
+  - type: OpenAPI
+    url: openapi/cyble-hosts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.odin.io/introduction
+  - type: APIReference
+    url: https://docs.odin.io/api-reference/introduction
+  - type: Authentication
+    url: authentication/cyble-authentication.yml
+  - type: Conventions
+    url: conventions/cyble-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cyble-problem-types.yml
+  - type: DataModel
+    url: data-model/cyble-data-model.yml
   - type: Postman
     url: https://www.postman.com/cybleai/cyble-odin-public/overview
 common:
