@@ -9,6 +9,18 @@ description: 'Cyble Inc. is an AI-native cyber threat intelligence company headq
   117B+ exposed files and 10B+ subdomains. ODIN is the company''s public, self-serve developer surface: a documented
   REST API at api.odin.io with a published OpenAPI 3.0.1 definition, first-party Go/Python/JavaScript SDKs, a Go
   CLI, a public Postman collection, and an llms.txt documentation index.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://search.odin.io/opengraph-image.png
 url: https://raw.githubusercontent.com/api-evangelist/cyble/refs/heads/main/apis.yml
 x-type: company
