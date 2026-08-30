@@ -1,0 +1,190 @@
+openapi: 3.2.0
+info:
+  title: Odin Fields API
+  description: ODIN APIs to search across IP Services, CVEs, Exposed Files/Buckets, Domains and more
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: https://api.odin.io/
+tags:
+- name: Fields
+paths:
+  /v1/fields/exposed/buckets:
+    get:
+      tags:
+      - Fields
+      summary: Get the fields for exposed buckets
+      description: Get the list of fields that can be used to query on exposed buckets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/APIResponse'
+                - type: object
+                  properties:
+                    Data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Field'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/fields/exposed/files:
+    get:
+      tags:
+      - Fields
+      summary: Get the fields for exposed files
+      description: Returns the exposed files fields data
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/APIResponse'
+                - type: object
+                  properties:
+                    Data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Field'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v1/fields/hosts/{category}:
+    get:
+      tags:
+      - Fields
+      summary: Get the fields for hosts
+      description: Get the list of fields to query on host
+      parameters:
+      - name: category
+        in: path
+        description: get the category
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Field'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    Field:
+      type: object
+      properties:
+        category:
+          type: string
+        display_category:
+          type: string
+        is_locked:
+          type: boolean
+          description: requires user subscription upgrade to access
+        name:
+          type: string
+    APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        pagination:
+          type: object
+        success:
+          type: boolean
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header
+x-original-swagger-version: '2.0'

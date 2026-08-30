@@ -1,0 +1,590 @@
+openapi: 3.2.0
+info:
+  title: Odin Domain API
+  description: ODIN APIs to search across IP Services, CVEs, Exposed Files/Buckets, Domains and more
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: https://api.odin.io/
+tags:
+- name: domain
+paths:
+  /v1/domain/count:
+    post:
+      tags:
+      - domain
+      summary: Get domains count
+      description: Get count of domain records based on query
+      requestBody:
+        description: Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/dns.DNSCountRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/dns.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/dns.Data'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+      x-codegen-request-body-name: query
+  /v1/domain/search:
+    post:
+      tags:
+      - domain
+      summary: Search domains
+      description: Search domains based on the query
+      requestBody:
+        description: Query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dns.DomainRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/eshandler.DNS'
+                    pagination:
+                      $ref: '#/components/schemas/dns.SearchPagination'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+      x-codegen-request-body-name: query
+  /v1/domain/subdomain/count:
+    post:
+      tags:
+      - domain
+      summary: Fetch the total no. of subdomain records
+      description: Returns the count of subdomain records based on domain
+      requestBody:
+        description: Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/dns.DNSCountRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/dns.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/dns.Data'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /v1/domain/subdomain/search:
+    post:
+      tags:
+      - domain
+      summary: Fetch the subdomain record
+      description: Returns the subdomain records based on query
+      requestBody:
+        description: Query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dns.DomainRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        type: string
+                    pagination:
+                      $ref: '#/components/schemas/dns.SearchPagination'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dns.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /v1/domain/whois/{domain-name}:
+    get:
+      tags:
+      - domain
+      summary: Fetch the domain whois record details
+      description: Provides extensive details about the domain whois record like name servers, domain status, registrar, etc.
+      parameters:
+      - name: domain-name
+        in: path
+        description: domain
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/schema.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/schema.DomainWhoisResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                type: object
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+      - ApiKeyAuth: []
+  /v1/domain/whois/{domain-name}/historical:
+    get:
+      tags:
+      - domain
+      summary: Fetch all the domain whois historical records
+      description: Provides historical details about the domain whois record like name servers, domain status, registrar, etc
+      parameters:
+      - name: domain-name
+        in: path
+        description: domain
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    ' meta':
+                      $ref: '#/components/schemas/schema.PaginationMeta'
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/schema.DomainWhoisResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                type: object
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+      - ApiKeyAuth: []
+  /v1/domain/whois/{domain-name}/is-expired:
+    get:
+      tags:
+      - domain
+      summary: Get the expiry for a particular domain
+      description: Provides historical details about the domain whois record like name servers, domain status, registrar, etc
+      parameters:
+      - name: domain-name
+        in: path
+        description: domain
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/schema.DomainWhoisResponse'
+                    meta:
+                      $ref: '#/components/schemas/schema.PaginationMeta'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                type: object
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+      - ApiKeyAuth: []
+  /v1/domain/whois/{domain-name}/is-registered:
+    get:
+      tags:
+      - domain
+      summary: Fetch all the domain whois historical records
+      description: Provides historical details about the domain whois record like name servers, domain status, registrar, etc
+      parameters:
+      - name: domain-name
+        in: path
+        description: domain
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/schema.DomainWhoisResponse'
+                    meta:
+                      $ref: '#/components/schemas/schema.PaginationMeta'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                type: object
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    schema.DomainWhoisResponse:
+      type: object
+      properties:
+        administrative_contact:
+          $ref: '#/components/schemas/schema.Contact'
+        audited_fields:
+          $ref: '#/components/schemas/schema.Audit'
+        billing_contact:
+          $ref: '#/components/schemas/schema.Contact'
+        created_date:
+          type: string
+        domain_name:
+          type: string
+        domain_status:
+          type: array
+          items:
+            type: string
+        expires_date:
+          type: string
+        name_servers:
+          type: array
+          items:
+            type: string
+        raw_data:
+          type: string
+          description: IngestedAt            time.Time  `json:"ingested_at"`
+        registrant_contact:
+          $ref: '#/components/schemas/schema.Contact'
+        registrar:
+          $ref: '#/components/schemas/schema.Registrar'
+        technical_contact:
+          $ref: '#/components/schemas/schema.Contact'
+        tld:
+          type: string
+        updated_date:
+          type: string
+    schema.Registrar:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Adjusted field name for clarity
+        name:
+          type: string
+        url:
+          type: string
+        whois:
+          type: string
+    schema.Audit:
+      type: object
+      properties:
+        created_at:
+          type: string
+        expires_date:
+          type: string
+        is_modified:
+          type: boolean
+          description: is audit logic applied (update in dates to fix invalid values)
+        updated_at:
+          type: string
+    schema.Contact:
+      type: object
+      properties:
+        address:
+          type: string
+        city:
+          type: string
+        company:
+          type: string
+        country:
+          type: string
+        country_code:
+          type: string
+        email:
+          type: string
+        email_domain:
+          type: string
+        fax:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+    schema.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        meta:
+          type: object
+        success:
+          type: boolean
+    dns.Data:
+      type: object
+      properties:
+        count:
+          type: integer
+    schema.PaginationMeta:
+      type: object
+      properties:
+        limit:
+          type: integer
+        pageState:
+          type: string
+    dns.SearchPagination:
+      type: object
+      properties:
+        last:
+          type: array
+          items:
+            type: object
+        limit:
+          type: integer
+        start:
+          type: array
+          items:
+            type: object
+        total:
+          type: integer
+    dns.DNSCountRequest:
+      type: object
+      properties:
+        domain:
+          type: string
+        keyword:
+          type: string
+        publishedAfter:
+          type: string
+        publishedBefore:
+          type: string
+    eshandler.EXTDNSName:
+      type: object
+      properties:
+        domain:
+          type: string
+        fld:
+          type: string
+        subdomain:
+          type: string
+        tld:
+          type: string
+    dns.ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    dns.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        pagination:
+          type: object
+        success:
+          type: boolean
+    eshandler.DNS:
+      type: object
+      properties:
+        added_at:
+          type: string
+        domain:
+          type: string
+        ext_dns_name:
+          $ref: '#/components/schemas/eshandler.EXTDNSName'
+        subdomain:
+          type: string
+    dns.DomainRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        domain:
+          type: string
+        keyword:
+          type: string
+        limit:
+          type: integer
+        publishedAfter:
+          type: string
+        publishedBefore:
+          type: string
+        start:
+          type: array
+          items:
+            type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header
+x-original-swagger-version: '2.0'

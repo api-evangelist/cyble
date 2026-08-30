@@ -1,0 +1,935 @@
+openapi: 3.2.0
+info:
+  title: Odin Hosts API
+  description: ODIN APIs to search across IP Services, CVEs, Exposed Files/Buckets, Domains and more
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: https://api.odin.io/
+tags:
+- name: Hosts
+paths:
+  /v1/cves/all/{ip}/{page}:
+    get:
+      tags:
+      - Hosts
+      summary: Get cve details
+      description: Get the detailed cve details for ip based on page
+      parameters:
+      - name: ip
+        in: path
+        description: get the ip
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: path
+        description: get the page
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.IpCveResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /v1/hosts/count:
+    post:
+      tags:
+      - Hosts
+      summary: Get the record count
+      description: Returns the total no of records based on query
+      requestBody:
+        description: Count Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/CountRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/APIResponse'
+                - type: object
+                  properties:
+                    ' meta':
+                      $ref: '#/components/schemas/PaginationStruct'
+                    data:
+                      $ref: '#/components/schemas/CertCount'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /v1/hosts/cve/{ip}:
+    get:
+      tags:
+      - Hosts
+      summary: Get ip cve details
+      description: Get detailed lost of cve ips
+      parameters:
+      - name: ip
+        in: path
+        description: get the ip
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.IpCveResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /v1/hosts/cves/{ip}/{cve}:
+    get:
+      tags:
+      - Hosts
+      summary: Get cve
+      description: Get the detailed cve based on ip and cve
+      parameters:
+      - name: ip
+        in: path
+        description: host ip ip
+        required: true
+        schema:
+          type: string
+      - name: cve
+        in: path
+        description: cve id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.IpCveResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /v1/hosts/exploits/{ip}:
+    get:
+      tags:
+      - Hosts
+      summary: Get exploits for ip
+      description: Get the detailed list of exploits for the ip
+      parameters:
+      - name: ip
+        in: path
+        description: get the ip
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.IpCveResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /v1/hosts/exploits/{ip}/{cve}:
+    get:
+      tags:
+      - Hosts
+      summary: Get exploits for ip and cve
+      description: Get the detailed exploit details for ip and cve
+      parameters:
+      - name: ip
+        in: path
+        description: ip address of the host
+        required: true
+        schema:
+          type: string
+      - name: cve
+        in: path
+        description: cve id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/vision.ExploitDetails'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+  /v1/hosts/search:
+    post:
+      tags:
+      - Hosts
+      summary: Search hosts
+      description: Get the detailed list of hosts based on query
+      requestBody:
+        description: Search Query
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/APIResponse'
+                - type: object
+                  properties:
+                    ' data':
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ipservices.IPSummaryData'
+                    pagination:
+                      $ref: '#/components/schemas/SearchPagination'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ErrorResponse'
+                - type: object
+                  properties:
+                    ' error':
+                      type: string
+                    success:
+                      type: boolean
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /v1/hosts/summary:
+    post:
+      tags:
+      - Hosts
+      summary: Get summary
+      description: Get the summary of hosts based on the field
+      requestBody:
+        description: Summary
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/SummaryRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ipservices.HostsSummaryResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /v1/hosts/{ip}:
+    get:
+      tags:
+      - Hosts
+      summary: Get the latest ip details
+      description: Get the complete and latest ip details
+      parameters:
+      - name: ip
+        in: path
+        description: get the ip
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/ipservices.IPSummaryData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '402':
+          description: Payment Required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    IPTag:
+      type: object
+      properties:
+        last_updated_at:
+          type: string
+        name:
+          type: string
+        pretty_name:
+          type: string
+        value:
+          type: boolean
+    IPHostname:
+      type: object
+      properties:
+        last_updated_at:
+          type: string
+        name:
+          type: string
+    IPCVE:
+      type: object
+      properties:
+        exploit:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPExploitDetails'
+        id:
+          type: string
+        references:
+          type: array
+          items:
+            type: string
+        score:
+          type: number
+        services:
+          type: array
+          items:
+            type: string
+        severity:
+          type: string
+        summary:
+          type: string
+        vector_string:
+          type: string
+        weakness:
+          type: string
+    IPServiceMeta:
+      type: object
+      properties:
+        category:
+          type: string
+        desc:
+          type: string
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+    IPASN:
+      type: object
+      properties:
+        country_code:
+          type: string
+        number:
+          type: string
+        organization:
+          type: string
+    IPDomain:
+      type: object
+      properties:
+        country:
+          type: string
+        dns_servers:
+          type: array
+          items:
+            type: string
+        emails:
+          type: array
+          items:
+            type: string
+        last_updated_at:
+          type: string
+        name:
+          type: string
+        web_server:
+          type: string
+    SearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        start:
+          type: array
+          items:
+            type: number
+    IPService:
+      type: object
+      properties:
+        _meta:
+          $ref: '#/components/schemas/IPServiceMeta'
+        cve:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPCVE'
+        extra_info:
+          type: string
+        last_updated_at:
+          type: string
+        modules:
+          type: object
+          additionalProperties: true
+        name:
+          type: string
+        port:
+          type: integer
+        product:
+          type: string
+        protocol:
+          type: string
+        softwares:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPServiceSoftware'
+        tunnel:
+          type: string
+        url:
+          type: string
+        version:
+          type: string
+    SummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
+    APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        pagination:
+          type: object
+        success:
+          type: boolean
+    IPLocation:
+      type: object
+      properties:
+        city:
+          type: string
+        continent:
+          type: string
+        coordinates:
+          type: object
+        country_code:
+          type: string
+        country_name:
+          type: string
+        geo_point:
+          type: string
+        locale_code:
+          type: string
+        network:
+          type: string
+        postal_code:
+          type: string
+    Encoding:
+      type: object
+      properties:
+        raw:
+          type: string
+    SearchPagination:
+      type: object
+      properties:
+        last:
+          type: array
+          items:
+            type: number
+        limit:
+          type: integer
+        start:
+          type: array
+          items:
+            type: number
+        total:
+          type: integer
+    CertCount:
+      type: object
+      properties:
+        count:
+          type: integer
+    PaginationStruct:
+      type: object
+      properties:
+        current:
+          type: string
+        total:
+          type: integer
+    IPServiceSoftware:
+      type: object
+      properties:
+        edition:
+          type: object
+        language:
+          type: object
+        part:
+          type: object
+        product:
+          type: object
+        update:
+          type: object
+        uri:
+          type: string
+        vendor:
+          type: object
+        version:
+          type: object
+    ipservices.IpCveResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ipservices.IpCveDetails'
+        message:
+          type: string
+        success:
+          type: boolean
+    ipservices.IPSummaryData:
+      type: object
+      properties:
+        asn:
+          $ref: '#/components/schemas/IPASN'
+        asn_updated_at:
+          type: string
+        banner:
+          type: array
+          items:
+            type: string
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPDomain'
+        hostnames:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPHostname'
+        ip:
+          type: string
+        is_ipv4:
+          type: boolean
+        is_ipv6:
+          type: boolean
+        is_vuln:
+          type: boolean
+        last_updated_at:
+          type: string
+        location:
+          $ref: '#/components/schemas/IPLocation'
+        location_updated_at:
+          type: string
+        scan_id:
+          type: integer
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPService'
+        services_hash:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPTag'
+        whois:
+          $ref: '#/components/schemas/IPWhois'
+        whois_updated_at:
+          type: string
+    CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    IPWhois:
+      type: object
+      properties:
+        _encoding:
+          $ref: '#/components/schemas/Encoding'
+        descr:
+          type: string
+        network:
+          type: string
+        organization:
+          type: string
+        raw:
+          type: string
+    ipservices.IpCveDetails:
+      type: object
+      properties:
+        exploit:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              file:
+                type: string
+              id:
+                type: string
+              platform:
+                type: string
+              type:
+                type: string
+              url:
+                type: string
+        id:
+          type: string
+        references:
+          type: array
+          items:
+            type: string
+        score:
+          type: number
+        services:
+          type: array
+          items:
+            type: string
+        severity:
+          type: string
+        summary:
+          type: string
+        vector_string:
+          type: string
+        weakness:
+          type: string
+    ipservices.HostsSummaryResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            buckets:
+              type: array
+              items:
+                type: object
+                properties:
+                  doc_count:
+                    type: integer
+                  key:
+                    type: object
+            doc_count_error_upper_bound:
+              type: integer
+            sum_other_doc_count:
+              type: integer
+        message:
+          type: string
+        success:
+          type: boolean
+    vision.ExploitDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        file:
+          type: string
+        id:
+          type: string
+        platform:
+          type: string
+        type:
+          type: string
+        url:
+          type: string
+    IPExploitDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        file:
+          type: string
+        id:
+          type: string
+        platform:
+          type: string
+        type:
+          type: string
+        url:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header
+x-original-swagger-version: '2.0'

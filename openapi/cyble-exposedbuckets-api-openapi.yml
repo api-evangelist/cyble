@@ -1,0 +1,231 @@
+openapi: 3.2.0
+info:
+  title: Odin Exposed Buckets API
+  description: ODIN APIs to search across IP Services, CVEs, Exposed Files/Buckets, Domains and more
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: https://api.odin.io/
+tags:
+- name: ExposedBuckets
+paths:
+  /v1/exposed/buckets/count:
+    post:
+      tags:
+      - ExposedBuckets
+      summary: Get exposed bucket count
+      description: Get exposed bucket count according to provided filters
+      requestBody:
+        description: Count Request
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.CountRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/exposed.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/exposed.SearchCount'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /v1/exposed/buckets/search:
+    post:
+      tags:
+      - ExposedBuckets
+      operationId: searchExposedBuckets
+      summary: Search exposed buckets
+      description: 'Search exposed buckets according to provided filters
+
+        Search across categories "img, aud, vid, font, doc, src, web, bkup, dbdump"
+
+        Search across labels "credential, financial, pii, legal, ip, medical, hr, report, confidential, backup, compromised, vulnerable"
+
+        Search across providers "aws, gcp, do, linode"'
+      requestBody:
+        description: Search Query
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/exposed.SearchRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/exposed.SearchResponse'
+                  success:
+                    type: boolean
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      limit:
+                        type: integer
+                      start:
+                        type: array
+                        items:
+                          type: object
+                      last:
+                        type: array
+                        items:
+                          type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+  /v1/exposed/buckets/summary:
+    post:
+      tags:
+      - ExposedBuckets
+      summary: Get exposed buckets summary
+      description: Get Returns exposed buckets aggregated count according to filters
+      requestBody:
+        description: Summary Request
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/exposed.SummaryRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/exposed.APIResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/exposed.Aggregate'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security:
+      - ApiKeyAuth: []
+      x-codegen-request-body-name: query
+components:
+  schemas:
+    exposed.SearchCount:
+      type: object
+      properties:
+        count:
+          type: integer
+    exposed.Aggregate:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: object
+        doc_count_error_upper_bound:
+          type: integer
+        sum_other_doc_count:
+          type: integer
+    exposed.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        pagination:
+          type: object
+        success:
+          type: boolean
+    exposed.SearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        sort_by:
+          type: string
+        sort_dir:
+          type: string
+        start:
+          type: array
+          items:
+            type: object
+    exposed.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    exposed.SummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header
+x-original-swagger-version: '2.0'

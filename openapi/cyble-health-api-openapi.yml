@@ -1,0 +1,34 @@
+openapi: 3.2.0
+info:
+  title: Odin Health API
+  description: ODIN APIs to search across IP Services, CVEs, Exposed Files/Buckets, Domains and more
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+servers:
+- url: https://api.odin.io/
+tags:
+- name: Health
+paths:
+  /v1/ping:
+    get:
+      tags:
+      - Health
+      summary: Health check
+      description: Returns the pong as response
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: X-API-Key
+      in: header
+x-original-swagger-version: '2.0'
