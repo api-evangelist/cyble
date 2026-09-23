@@ -1,0 +1,40 @@
+{
+  "provider": "cyble",
+  "sources": [
+    "_original/cyble-odin-openapi-original.yml"
+  ],
+  "outputs": [
+    "cyble-exposedbuckets-api-openapi.yml",
+    "cyble-exposedfiles-api-openapi.yml",
+    "cyble-fields-api-openapi.yml",
+    "cyble-health-api-openapi.yml",
+    "cyble-hosts-api-openapi.yml",
+    "cyble-domain-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "cyble-odin-openapi-original.yml: dangling $ref: #/components/schemas/exposed.SearchResponse"
+  ],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "cyble-odin-openapi-original.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "cyble-odin-openapi-original.yml: declared missing tag: ExposedBuckets",
+    "cyble-odin-openapi-original.yml: declared missing tag: ExposedFiles",
+    "cyble-odin-openapi-original.yml: declared missing tag: Fields",
+    "cyble-odin-openapi-original.yml: declared missing tag: Health",
+    "cyble-odin-openapi-original.yml: declared missing tag: Hosts",
+    "cyble-odin-openapi-original.yml: declared missing tag: domain",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/cyble-odin-openapi.yml: archived document superseded by a larger archived document",
+    "cyble-domain-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cyble-exposedbuckets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cyble-exposedfiles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cyble-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cyble-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "cyble-hosts-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

@@ -25,6 +25,8 @@ paths:
             text/plain:
               schema:
                 type: string
+      operationId: getV1Ping
+      x-operation-id-source: derived
 components:
   securitySchemes:
     ApiKeyAuth:

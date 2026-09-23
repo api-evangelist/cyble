@@ -54,6 +54,8 @@ paths:
       security:
       - ApiKeyAuth: []
       x-codegen-request-body-name: query
+      operationId: postV1ExposedBucketsCount
+      x-operation-id-source: derived
   /v1/exposed/buckets/search:
     post:
       tags:
@@ -162,24 +164,10 @@ paths:
       security:
       - ApiKeyAuth: []
       x-codegen-request-body-name: query
+      operationId: postV1ExposedBucketsSummary
+      x-operation-id-source: derived
 components:
   schemas:
-    exposed.SearchCount:
-      type: object
-      properties:
-        count:
-          type: integer
-    exposed.Aggregate:
-      type: object
-      properties:
-        buckets:
-          type: array
-          items:
-            type: object
-        doc_count_error_upper_bound:
-          type: integer
-        sum_other_doc_count:
-          type: integer
     exposed.APIResponse:
       type: object
       properties:
@@ -189,6 +177,11 @@ components:
           type: object
         success:
           type: boolean
+    exposed.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
     exposed.SearchRequest:
       required:
       - limit
@@ -206,11 +199,22 @@ components:
           type: array
           items:
             type: object
-    exposed.CountRequest:
+    exposed.SearchCount:
       type: object
       properties:
-        query:
-          type: string
+        count:
+          type: integer
+    exposed.Aggregate:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: object
+        doc_count_error_upper_bound:
+          type: integer
+        sum_other_doc_count:
+          type: integer
     exposed.SummaryRequest:
       required:
       - field

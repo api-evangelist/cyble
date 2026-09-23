@@ -1,0 +1,29 @@
+# Front Door AI Index — cyble — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: cyble
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: cyble.com
+  final_host: cyble.com
+  ownership: own
+  owner: cyble
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 57
+  host_score: 57
+  density: 18.33
+  words: 3109
+  tiers:
+    agentic: 12
+    core: 45
+    model: 0
+  ambiguous: 63
+  top_terms:
+    intelligence: 58
+    AI: 44
+    agentic: 12
+    agent: 5
+    LLMs: 1

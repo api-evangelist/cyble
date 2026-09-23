@@ -54,6 +54,8 @@ paths:
       security:
       - ApiKeyAuth: []
       x-codegen-request-body-name: query
+      operationId: postV1ExposedFilesCount
+      x-operation-id-source: derived
   /v1/exposed/files/search:
     post:
       tags:
@@ -104,6 +106,8 @@ paths:
       security:
       - ApiKeyAuth: []
       x-codegen-request-body-name: query
+      operationId: postV1ExposedFilesSearch
+      x-operation-id-source: derived
   /v1/exposed/files/summary:
     post:
       tags:
@@ -146,8 +150,41 @@ paths:
       security:
       - ApiKeyAuth: []
       x-codegen-request-body-name: query
+      operationId: postV1ExposedFilesSummary
+      x-operation-id-source: derived
 components:
   schemas:
+    exposed.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        pagination:
+          type: object
+        success:
+          type: boolean
+    exposed.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    exposed.SearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        sort_by:
+          type: string
+        sort_dir:
+          type: string
+        start:
+          type: array
+          items:
+            type: object
     exposed.FileAPIResponse:
       type: object
       properties:
@@ -163,17 +200,6 @@ components:
       type: object
       properties:
         count:
-          type: integer
-    exposed.Aggregate:
-      type: object
-      properties:
-        buckets:
-          type: array
-          items:
-            type: object
-        doc_count_error_upper_bound:
-          type: integer
-        sum_other_doc_count:
           type: integer
     exposed.File:
       type: object
@@ -214,32 +240,29 @@ components:
           type: string
         url:
           type: string
-    exposed.APIResponse:
+    exposed.Aggregate:
       type: object
       properties:
-        data:
-          type: object
-        pagination:
-          type: object
-        success:
-          type: boolean
-    exposed.SearchRequest:
+        buckets:
+          type: array
+          items:
+            type: object
+        doc_count_error_upper_bound:
+          type: integer
+        sum_other_doc_count:
+          type: integer
+    exposed.SummaryRequest:
       required:
+      - field
       - limit
       type: object
       properties:
+        field:
+          type: string
         limit:
           type: integer
         query:
           type: string
-        sort_by:
-          type: string
-        sort_dir:
-          type: string
-        start:
-          type: array
-          items:
-            type: object
     exposed.SearchPagination:
       type: object
       properties:
@@ -255,23 +278,6 @@ components:
             type: object
         total:
           type: integer
-    exposed.CountRequest:
-      type: object
-      properties:
-        query:
-          type: string
-    exposed.SummaryRequest:
-      required:
-      - field
-      - limit
-      type: object
-      properties:
-        field:
-          type: string
-        limit:
-          type: integer
-        query:
-          type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
