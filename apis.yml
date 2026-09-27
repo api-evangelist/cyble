@@ -42,6 +42,10 @@ x-source: harvest:secondary-market
 specificationVersion: '0.23'
 created: '2026-08-11'
 modified: '2026-08-11'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-25
+x-docs-hosting: vercel
 tags:
 - Threat Intelligence
 - Cybersecurity
@@ -55,6 +59,7 @@ tags:
 - WHOIS
 - OSINT
 - Security
+- A2A
 tags_raw:
 - threat-intelligence
 - cybersecurity
@@ -68,6 +73,7 @@ tags_raw:
 - whois
 - osint
 - security
+- A2A
 apis:
 - aid: cyble:cyble-domain-api
   name: Cyble Domain API
@@ -300,3 +306,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 27
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.odin.io/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

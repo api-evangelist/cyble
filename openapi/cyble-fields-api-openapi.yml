@@ -158,13 +158,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        success:
-          type: boolean
     Field:
       type: object
       properties:
@@ -177,6 +170,13 @@ components:
           description: requires user subscription upgrade to access
         name:
           type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
     APIResponse:
       type: object
       properties:

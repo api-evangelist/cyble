@@ -177,11 +177,11 @@ components:
           type: object
         success:
           type: boolean
-    exposed.CountRequest:
+    exposed.SearchCount:
       type: object
       properties:
-        query:
-          type: string
+        count:
+          type: integer
     exposed.SearchRequest:
       required:
       - limit
@@ -199,22 +199,6 @@ components:
           type: array
           items:
             type: object
-    exposed.SearchCount:
-      type: object
-      properties:
-        count:
-          type: integer
-    exposed.Aggregate:
-      type: object
-      properties:
-        buckets:
-          type: array
-          items:
-            type: object
-        doc_count_error_upper_bound:
-          type: integer
-        sum_other_doc_count:
-          type: integer
     exposed.SummaryRequest:
       required:
       - field
@@ -227,6 +211,22 @@ components:
           type: integer
         query:
           type: string
+    exposed.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    exposed.Aggregate:
+      type: object
+      properties:
+        buckets:
+          type: array
+          items:
+            type: object
+        doc_count_error_upper_bound:
+          type: integer
+        sum_other_doc_count:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
