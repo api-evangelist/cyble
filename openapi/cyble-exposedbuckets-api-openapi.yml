@@ -168,6 +168,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    exposed.SummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
     exposed.APIResponse:
       type: object
       properties:
@@ -177,11 +189,6 @@ components:
           type: object
         success:
           type: boolean
-    exposed.SearchCount:
-      type: object
-      properties:
-        count:
-          type: integer
     exposed.SearchRequest:
       required:
       - limit
@@ -199,23 +206,6 @@ components:
           type: array
           items:
             type: object
-    exposed.SummaryRequest:
-      required:
-      - field
-      - limit
-      type: object
-      properties:
-        field:
-          type: string
-        limit:
-          type: integer
-        query:
-          type: string
-    exposed.CountRequest:
-      type: object
-      properties:
-        query:
-          type: string
     exposed.Aggregate:
       type: object
       properties:
@@ -226,6 +216,16 @@ components:
         doc_count_error_upper_bound:
           type: integer
         sum_other_doc_count:
+          type: integer
+    exposed.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    exposed.SearchCount:
+      type: object
+      properties:
+        count:
           type: integer
   securitySchemes:
     ApiKeyAuth:

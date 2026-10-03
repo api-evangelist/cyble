@@ -412,6 +412,32 @@ components:
           type: integer
         pageState:
           type: string
+    dns.SearchPagination:
+      type: object
+      properties:
+        last:
+          type: array
+          items:
+            type: object
+        limit:
+          type: integer
+        start:
+          type: array
+          items:
+            type: object
+        total:
+          type: integer
+    dns.DNSCountRequest:
+      type: object
+      properties:
+        domain:
+          type: string
+        keyword:
+          type: string
+        publishedAfter:
+          type: string
+        publishedBefore:
+          type: string
     schema.APIResponse:
       type: object
       properties:
@@ -423,24 +449,23 @@ components:
           type: object
         success:
           type: boolean
-    eshandler.DNS:
+    dns.Data:
       type: object
       properties:
-        added_at:
-          type: string
-        domain:
-          type: string
-        ext_dns_name:
-          $ref: '#/components/schemas/eshandler.EXTDNSName'
-        subdomain:
-          type: string
-    dns.ErrorResponse:
+        count:
+          type: integer
+    schema.Audit:
       type: object
       properties:
-        message:
+        created_at:
           type: string
-        success:
+        expires_date:
+          type: string
+        is_modified:
           type: boolean
+          description: is audit logic applied (update in dates to fix invalid values)
+        updated_at:
+          type: string
     eshandler.EXTDNSName:
       type: object
       properties:
@@ -451,6 +476,18 @@ components:
         subdomain:
           type: string
         tld:
+          type: string
+    schema.Registrar:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Adjusted field name for clarity
+        name:
+          type: string
+        url:
+          type: string
+        whois:
           type: string
     schema.Contact:
       type: object
@@ -479,75 +516,13 @@ components:
           type: string
         zip:
           type: string
-    dns.DomainRequest:
-      required:
-      - limit
+    dns.ErrorResponse:
       type: object
       properties:
-        domain:
+        message:
           type: string
-        keyword:
-          type: string
-        limit:
-          type: integer
-        publishedAfter:
-          type: string
-        publishedBefore:
-          type: string
-        start:
-          type: array
-          items:
-            type: object
-    schema.Registrar:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Adjusted field name for clarity
-        name:
-          type: string
-        url:
-          type: string
-        whois:
-          type: string
-    schema.Audit:
-      type: object
-      properties:
-        created_at:
-          type: string
-        expires_date:
-          type: string
-        is_modified:
+        success:
           type: boolean
-          description: is audit logic applied (update in dates to fix invalid values)
-        updated_at:
-          type: string
-    dns.SearchPagination:
-      type: object
-      properties:
-        last:
-          type: array
-          items:
-            type: object
-        limit:
-          type: integer
-        start:
-          type: array
-          items:
-            type: object
-        total:
-          type: integer
-    dns.DNSCountRequest:
-      type: object
-      properties:
-        domain:
-          type: string
-        keyword:
-          type: string
-        publishedAfter:
-          type: string
-        publishedBefore:
-          type: string
     dns.APIResponse:
       type: object
       properties:
@@ -593,11 +568,36 @@ components:
           type: string
         updated_date:
           type: string
-    dns.Data:
+    eshandler.DNS:
       type: object
       properties:
-        count:
+        added_at:
+          type: string
+        domain:
+          type: string
+        ext_dns_name:
+          $ref: '#/components/schemas/eshandler.EXTDNSName'
+        subdomain:
+          type: string
+    dns.DomainRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        domain:
+          type: string
+        keyword:
+          type: string
+        limit:
           type: integer
+        publishedAfter:
+          type: string
+        publishedBefore:
+          type: string
+        start:
+          type: array
+          items:
+            type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
