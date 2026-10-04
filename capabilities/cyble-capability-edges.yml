@@ -1,0 +1,24 @@
+slug: cyble
+provider: Cyble
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Hosts
+  spec_file: cyble-hosts-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.78
+  evidence: '''Get cve details'', ''Get exploits for ip'', ''Get exploits for ip and cve'', ''Search hosts'''
+  reason: The operations return CVEs and known exploits for internet-facing hosts/IPs, which is vulnerability
+    identification and exposure assessment rather than incident response.

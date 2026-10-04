@@ -222,6 +222,9 @@ apis:
   - type: Postman
     url: https://www.postman.com/cybleai/cyble-odin-public/overview
 common:
+- type: CapabilityMap
+  url: capabilities/cyble-capability-edges.yml
+  name: Cyble Business Capability Map
 - type: TrustCenter
   url: security/cyble-trust-center.yml
 - type: Website
