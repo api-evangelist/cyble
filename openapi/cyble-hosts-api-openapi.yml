@@ -539,25 +539,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    IPServiceSoftware:
-      type: object
-      properties:
-        edition:
-          type: object
-        language:
-          type: object
-        part:
-          type: object
-        product:
-          type: object
-        update:
-          type: object
-        uri:
-          type: string
-        vendor:
-          type: object
-        version:
-          type: object
     vision.ExploitDetails:
       type: object
       properties:
@@ -573,10 +554,49 @@ components:
           type: string
         url:
           type: string
-    CountRequest:
+    ErrorResponse:
       type: object
       properties:
-        query:
+        message:
+          type: string
+        success:
+          type: boolean
+    IPWhois:
+      type: object
+      properties:
+        _encoding:
+          $ref: '#/components/schemas/Encoding'
+        descr:
+          type: string
+        network:
+          type: string
+        organization:
+          type: string
+        raw:
+          type: string
+    IPASN:
+      type: object
+      properties:
+        country_code:
+          type: string
+        number:
+          type: string
+        organization:
+          type: string
+    IPExploitDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        file:
+          type: string
+        id:
+          type: string
+        platform:
+          type: string
+        type:
+          type: string
+        url:
           type: string
     IPCVE:
       type: object
@@ -605,6 +625,124 @@ components:
           type: string
         weakness:
           type: string
+    IPService:
+      type: object
+      properties:
+        _meta:
+          $ref: '#/components/schemas/IPServiceMeta'
+        cve:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPCVE'
+        extra_info:
+          type: string
+        last_updated_at:
+          type: string
+        modules:
+          type: object
+          additionalProperties: true
+        name:
+          type: string
+        port:
+          type: integer
+        product:
+          type: string
+        protocol:
+          type: string
+        softwares:
+          type: array
+          items:
+            $ref: '#/components/schemas/IPServiceSoftware'
+        tunnel:
+          type: string
+        url:
+          type: string
+        version:
+          type: string
+    SearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        start:
+          type: array
+          items:
+            type: number
+    IPDomain:
+      type: object
+      properties:
+        country:
+          type: string
+        dns_servers:
+          type: array
+          items:
+            type: string
+        emails:
+          type: array
+          items:
+            type: string
+        last_updated_at:
+          type: string
+        name:
+          type: string
+        web_server:
+          type: string
+    ipservices.IpCveResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ipservices.IpCveDetails'
+        message:
+          type: string
+        success:
+          type: boolean
+    IPServiceMeta:
+      type: object
+      properties:
+        category:
+          type: string
+        desc:
+          type: string
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    IPTag:
+      type: object
+      properties:
+        last_updated_at:
+          type: string
+        name:
+          type: string
+        pretty_name:
+          type: string
+        value:
+          type: boolean
+    SummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
+    CertCount:
+      type: object
+      properties:
+        count:
+          type: integer
     ipservices.IpCveDetails:
       type: object
       properties:
@@ -644,18 +782,6 @@ components:
         vector_string:
           type: string
         weakness:
-          type: string
-    SummaryRequest:
-      required:
-      - field
-      - limit
-      type: object
-      properties:
-        field:
-          type: string
-        limit:
-          type: integer
-        query:
           type: string
     ipservices.IPSummaryData:
       type: object
@@ -706,45 +832,10 @@ components:
           $ref: '#/components/schemas/IPWhois'
         whois_updated_at:
           type: string
-    ipservices.IpCveResponse:
+    Encoding:
       type: object
       properties:
-        data:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ipservices.IpCveDetails'
-        message:
-          type: string
-        success:
-          type: boolean
-    IPWhois:
-      type: object
-      properties:
-        _encoding:
-          $ref: '#/components/schemas/Encoding'
-        descr:
-          type: string
-        network:
-          type: string
-        organization:
-          type: string
         raw:
-          type: string
-    IPHostname:
-      type: object
-      properties:
-        last_updated_at:
-          type: string
-        name:
-          type: string
-    IPASN:
-      type: object
-      properties:
-        country_code:
-          type: string
-        number:
-          type: string
-        organization:
           type: string
     IPLocation:
       type: object
@@ -767,88 +858,37 @@ components:
           type: string
         postal_code:
           type: string
-    ErrorResponse:
+    IPServiceSoftware:
       type: object
       properties:
-        message:
-          type: string
-        success:
-          type: boolean
-    APIResponse:
-      type: object
-      properties:
-        data:
+        edition:
           type: object
-        message:
-          type: string
-        pagination:
+        language:
           type: object
-        success:
-          type: boolean
-    SearchRequest:
-      required:
-      - limit
+        part:
+          type: object
+        product:
+          type: object
+        update:
+          type: object
+        uri:
+          type: string
+        vendor:
+          type: object
+        version:
+          type: object
+    IPHostname:
       type: object
       properties:
-        limit:
-          type: integer
-        query:
-          type: string
-        start:
-          type: array
-          items:
-            type: number
-    IPService:
-      type: object
-      properties:
-        _meta:
-          $ref: '#/components/schemas/IPServiceMeta'
-        cve:
-          type: array
-          items:
-            $ref: '#/components/schemas/IPCVE'
-        extra_info:
-          type: string
         last_updated_at:
           type: string
-        modules:
-          type: object
-          additionalProperties: true
         name:
           type: string
-        port:
-          type: integer
-        product:
-          type: string
-        protocol:
-          type: string
-        softwares:
-          type: array
-          items:
-            $ref: '#/components/schemas/IPServiceSoftware'
-        tunnel:
-          type: string
-        url:
-          type: string
-        version:
-          type: string
-    Encoding:
+    CountRequest:
       type: object
       properties:
-        raw:
+        query:
           type: string
-    PaginationStruct:
-      type: object
-      properties:
-        current:
-          type: string
-        total:
-          type: integer
-    CertCount:
-      type: object
-      properties:
-        count:
-          type: integer
     ipservices.HostsSummaryResponse:
       type: object
       properties:
@@ -872,19 +912,6 @@ components:
           type: string
         success:
           type: boolean
-    IPServiceMeta:
-      type: object
-      properties:
-        category:
-          type: string
-        desc:
-          type: string
-        name:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
     SearchPagination:
       type: object
       properties:
@@ -900,50 +927,23 @@ components:
             type: number
         total:
           type: integer
-    IPDomain:
+    PaginationStruct:
       type: object
       properties:
-        country:
+        current:
           type: string
-        dns_servers:
-          type: array
-          items:
-            type: string
-        emails:
-          type: array
-          items:
-            type: string
-        last_updated_at:
-          type: string
-        name:
-          type: string
-        web_server:
-          type: string
-    IPExploitDetails:
+        total:
+          type: integer
+    APIResponse:
       type: object
       properties:
-        description:
+        data:
+          type: object
+        message:
           type: string
-        file:
-          type: string
-        id:
-          type: string
-        platform:
-          type: string
-        type:
-          type: string
-        url:
-          type: string
-    IPTag:
-      type: object
-      properties:
-        last_updated_at:
-          type: string
-        name:
-          type: string
-        pretty_name:
-          type: string
-        value:
+        pagination:
+          type: object
+        success:
           type: boolean
   securitySchemes:
     ApiKeyAuth:

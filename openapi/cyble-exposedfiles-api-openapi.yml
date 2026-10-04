@@ -154,27 +154,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    exposed.SummaryRequest:
-      required:
-      - field
-      - limit
+    exposed.SearchPagination:
       type: object
       properties:
-        field:
-          type: string
+        last:
+          type: array
+          items:
+            type: object
         limit:
           type: integer
-        query:
-          type: string
-    exposed.APIResponse:
+        start:
+          type: array
+          items:
+            type: object
+        total:
+          type: integer
+    exposed.SearchCount:
       type: object
       properties:
-        data:
-          type: object
-        pagination:
-          type: object
-        success:
-          type: boolean
+        count:
+          type: integer
     exposed.File:
       type: object
       properties:
@@ -214,6 +213,49 @@ components:
           type: string
         url:
           type: string
+    exposed.SummaryRequest:
+      required:
+      - field
+      - limit
+      type: object
+      properties:
+        field:
+          type: string
+        limit:
+          type: integer
+        query:
+          type: string
+    exposed.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        pagination:
+          type: object
+        success:
+          type: boolean
+    exposed.CountRequest:
+      type: object
+      properties:
+        query:
+          type: string
+    exposed.SearchRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        limit:
+          type: integer
+        query:
+          type: string
+        sort_by:
+          type: string
+        sort_dir:
+          type: string
+        start:
+          type: array
+          items:
+            type: object
     exposed.FileAPIResponse:
       type: object
       properties:
@@ -235,48 +277,6 @@ components:
         doc_count_error_upper_bound:
           type: integer
         sum_other_doc_count:
-          type: integer
-    exposed.SearchRequest:
-      required:
-      - limit
-      type: object
-      properties:
-        limit:
-          type: integer
-        query:
-          type: string
-        sort_by:
-          type: string
-        sort_dir:
-          type: string
-        start:
-          type: array
-          items:
-            type: object
-    exposed.CountRequest:
-      type: object
-      properties:
-        query:
-          type: string
-    exposed.SearchPagination:
-      type: object
-      properties:
-        last:
-          type: array
-          items:
-            type: object
-        limit:
-          type: integer
-        start:
-          type: array
-          items:
-            type: object
-        total:
-          type: integer
-    exposed.SearchCount:
-      type: object
-      properties:
-        count:
           type: integer
   securitySchemes:
     ApiKeyAuth:

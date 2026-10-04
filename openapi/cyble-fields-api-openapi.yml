@@ -165,6 +165,17 @@ components:
           type: string
         success:
           type: boolean
+    APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        pagination:
+          type: object
+        success:
+          type: boolean
     Field:
       type: object
       properties:
@@ -177,17 +188,6 @@ components:
           description: requires user subscription upgrade to access
         name:
           type: string
-    APIResponse:
-      type: object
-      properties:
-        data:
-          type: object
-        message:
-          type: string
-        pagination:
-          type: object
-        success:
-          type: boolean
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
