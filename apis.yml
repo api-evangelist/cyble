@@ -41,7 +41,7 @@ x-type: company
 x-source: harvest:secondary-market
 specificationVersion: '0.23'
 created: '2026-08-11'
-modified: '2026-08-11'
+modified: '2026-10-06'
 x-docs-platform: mintlify
 x-docs-platform-confidence: medium
 x-docs-platform-checked: 2026-09-25
@@ -222,6 +222,8 @@ apis:
   - type: Postman
     url: https://www.postman.com/cybleai/cyble-odin-public/overview
 common:
+- url: https://cyble.com/feed/
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/cyble-capability-edges.yml
   name: Cyble Business Capability Map
