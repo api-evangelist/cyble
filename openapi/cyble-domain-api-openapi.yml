@@ -412,53 +412,6 @@ components:
           type: string
         success:
           type: boolean
-    eshandler.EXTDNSName:
-      type: object
-      properties:
-        domain:
-          type: string
-        fld:
-          type: string
-        subdomain:
-          type: string
-        tld:
-          type: string
-    schema.Contact:
-      type: object
-      properties:
-        address:
-          type: string
-        city:
-          type: string
-        company:
-          type: string
-        country:
-          type: string
-        country_code:
-          type: string
-        email:
-          type: string
-        email_domain:
-          type: string
-        fax:
-          type: string
-        name:
-          type: string
-        phone:
-          type: string
-        state:
-          type: string
-        zip:
-          type: string
-    dns.APIResponse:
-      type: object
-      properties:
-        data:
-          type: object
-        pagination:
-          type: object
-        success:
-          type: boolean
     dns.DNSCountRequest:
       type: object
       properties:
@@ -470,59 +423,15 @@ components:
           type: string
         publishedBefore:
           type: string
-    schema.APIResponse:
+    dns.APIResponse:
       type: object
       properties:
         data:
           type: object
-        message:
-          type: string
-        meta:
+        pagination:
           type: object
         success:
           type: boolean
-    schema.PaginationMeta:
-      type: object
-      properties:
-        limit:
-          type: integer
-        pageState:
-          type: string
-    eshandler.DNS:
-      type: object
-      properties:
-        added_at:
-          type: string
-        domain:
-          type: string
-        ext_dns_name:
-          $ref: '#/components/schemas/eshandler.EXTDNSName'
-        subdomain:
-          type: string
-    schema.Audit:
-      type: object
-      properties:
-        created_at:
-          type: string
-        expires_date:
-          type: string
-        is_modified:
-          type: boolean
-          description: is audit logic applied (update in dates to fix invalid values)
-        updated_at:
-          type: string
-    schema.Registrar:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Adjusted field name for clarity
-        name:
-          type: string
-        url:
-          type: string
-        whois:
-          type: string
     dns.SearchPagination:
       type: object
       properties:
@@ -538,30 +447,25 @@ components:
             type: object
         total:
           type: integer
-    dns.DomainRequest:
-      required:
-      - limit
+    schema.Registrar:
       type: object
       properties:
-        domain:
+        id:
           type: string
-        keyword:
+          description: Adjusted field name for clarity
+        name:
           type: string
+        url:
+          type: string
+        whois:
+          type: string
+    schema.PaginationMeta:
+      type: object
+      properties:
         limit:
           type: integer
-        publishedAfter:
+        pageState:
           type: string
-        publishedBefore:
-          type: string
-        start:
-          type: array
-          items:
-            type: object
-    dns.Data:
-      type: object
-      properties:
-        count:
-          type: integer
     schema.DomainWhoisResponse:
       type: object
       properties:
@@ -597,6 +501,102 @@ components:
         tld:
           type: string
         updated_date:
+          type: string
+    schema.Audit:
+      type: object
+      properties:
+        created_at:
+          type: string
+        expires_date:
+          type: string
+        is_modified:
+          type: boolean
+          description: is audit logic applied (update in dates to fix invalid values)
+        updated_at:
+          type: string
+    schema.Contact:
+      type: object
+      properties:
+        address:
+          type: string
+        city:
+          type: string
+        company:
+          type: string
+        country:
+          type: string
+        country_code:
+          type: string
+        email:
+          type: string
+        email_domain:
+          type: string
+        fax:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+    dns.Data:
+      type: object
+      properties:
+        count:
+          type: integer
+    schema.APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        meta:
+          type: object
+        success:
+          type: boolean
+    dns.DomainRequest:
+      required:
+      - limit
+      type: object
+      properties:
+        domain:
+          type: string
+        keyword:
+          type: string
+        limit:
+          type: integer
+        publishedAfter:
+          type: string
+        publishedBefore:
+          type: string
+        start:
+          type: array
+          items:
+            type: object
+    eshandler.DNS:
+      type: object
+      properties:
+        added_at:
+          type: string
+        domain:
+          type: string
+        ext_dns_name:
+          $ref: '#/components/schemas/eshandler.EXTDNSName'
+        subdomain:
+          type: string
+    eshandler.EXTDNSName:
+      type: object
+      properties:
+        domain:
+          type: string
+        fld:
+          type: string
+        subdomain:
+          type: string
+        tld:
           type: string
   securitySchemes:
     ApiKeyAuth:

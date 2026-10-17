@@ -158,24 +158,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        success:
-          type: boolean
-    APIResponse:
-      type: object
-      properties:
-        data:
-          type: object
-        message:
-          type: string
-        pagination:
-          type: object
-        success:
-          type: boolean
     Field:
       type: object
       properties:
@@ -188,6 +170,24 @@ components:
           description: requires user subscription upgrade to access
         name:
           type: string
+    APIResponse:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
+        pagination:
+          type: object
+        success:
+          type: boolean
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
