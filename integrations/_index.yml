@@ -66,3 +66,42 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: cyble-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/cybledev/odin-cli
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/cybledev/odin-cli
+      version: v1.0.3
+      released: '2024-10-16'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/cybledev/odin-cli
+      repo_leg: github-org:cybledev
+      publisher_leg: org:cybledev
+      matched_by: github-org
+    - name: github.com/cybledev/odin-sdk-go
+      version: v0.0.0-20250116090420-81f22fef6f88
+      released: '2025-01-16'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/cybledev/odin-sdk-go
+      repo_leg: github-org:cybledev
+      publisher_leg: org:cybledev
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null

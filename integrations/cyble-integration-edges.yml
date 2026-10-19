@@ -1,8 +1,15 @@
 generated: '2026-10-13'
 method: searched
 checked:
+- https://api.nuget.org/v3
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
+- https://crates.io/api/v1
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - microsoft-sentinel/integrations/microsoft-sentinel-integration-edges.yml
 - palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
 - splunk/integrations/splunk-integration-edges.yml
@@ -95,6 +102,45 @@ edges:
   detected: '2026-10-14'
   detected_by: mirror-platform-listings.py
   category: app
+- partner_name: Go module proxy
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official SDK (Go)
+  evidence: https://pkg.go.dev/github.com/cybledev/odin-cli
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/cybledev/odin-cli
+      version: v1.0.3
+      released: '2024-10-16'
+      released_field: Time
+      lapsed: true
+      page: https://pkg.go.dev/github.com/cybledev/odin-cli
+      repo_leg: github-org:cybledev
+      publisher_leg: org:cybledev
+      matched_by: github-org
+    - name: github.com/cybledev/odin-sdk-go
+      version: v0.0.0-20250116090420-81f22fef6f88
+      released: '2025-01-16'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/cybledev/odin-sdk-go
+      repo_leg: github-org:cybledev
+      publisher_leg: org:cybledev
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 source:
 - microsoft-sentinel/integrations/microsoft-sentinel-integration-edges.yml
 - palo-alto-networks/integrations/palo-alto-networks-integration-edges.yml
