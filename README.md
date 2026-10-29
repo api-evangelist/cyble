@@ -64,22 +64,130 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cyble Inc. is an AI-native cyber threat intelligence company headquartered in Cupertino, California,
-serving enterprises, governments and federal bodies with dark-web monitoring, attack-surface
-management and actionable threat intelligence. Its product family includes Cyble Vision, Cyble Hawk,
-AmIBreached and The Cyber Express — plus **ODIN**, a public internet-scanning search engine indexing
-254M+ IPv4 hosts, 3B+ services across 500+ ports, 789k+ exposed cloud storage buckets, 117B+ exposed
-files and 10B+ subdomains.
+Cyble Inc. is an AI-native cyber threat intelligence company headquartered in Cupertino, California, serving enterprises, governments and federal bodies with dark-web monitoring, attack-surface management and actionable threat intelligence. Its product family includes Cyble Vision (the enterprise threat-intelligence platform, integrated with 70+ SIEM/SOAR/TIP platforms), Cyble Hawk (built for federal and government bodies), AmIBreached (dark-web exposure monitoring), The Cyber Express (its security news publication), and ODIN — a public internet-scanning search engine that indexes 254M+ IPv4 hosts, 3B+ services across 500+ ports, 789k+ exposed cloud storage buckets, 117B+ exposed files and 10B+ subdomains. ODIN is the company's public, self-serve developer surface: a documented REST API at api.odin.io with a published OpenAPI 3.0.1 definition, first-party Go/Python/JavaScript SDKs, a Go CLI, a public Postman collection, and an llms.txt documentation index.
 
-ODIN is the company's public, self-serve developer surface, and it is what this profile covers.
+**Areas:** Threat Intelligence · Cybersecurity · Attack Surface Management · Internet Scanning · Dark Web Monitoring · Vulnerability Management · CVE · ExposedBuckets · Domain Intelligence · WHOIS · OSINT · Security
 
-- Website — https://cyble.com/
-- ODIN — https://odin.io/
-- Developer docs — https://docs.odin.io/
-- API reference — https://docs.odin.io/api-reference/introduction
-- OpenAPI 3.0.1 (27 operations) — https://docs.odin.io/openapi.yaml
-- llms.txt — https://docs.odin.io/llms.txt
-- Postman — https://www.postman.com/cybleai/cyble-odin-public/overview
-- GitHub — https://github.com/cybledev
-- Status — https://status.odin.io
-- Trust portal — https://trust.cyble.com/
+## Cyble on APIs.io
+
+Everything profiled for Cyble is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cyble/](https://apis.io/providers/cyble/)** — or go straight to one of the APIs or properties below.
+
+### APIs (6)
+
+- [Cyble Domain API](https://apis.io/apis/cyble/cyble-domain-api/) — The domain API from Cyble — 8 operation(s) for domain.
+- [Cyble Exposed Buckets API](https://apis.io/apis/cyble/cyble-exposedbuckets-api/) — The ExposedBuckets API from Cyble — 3 operation(s) for exposedbuckets.
+- [Cyble Exposed Files API](https://apis.io/apis/cyble/cyble-exposedfiles-api/) — The ExposedFiles API from Cyble — 3 operation(s) for exposedfiles.
+- [Cyble Fields API](https://apis.io/apis/cyble/cyble-fields-api/) — The Fields API from Cyble — 3 operation(s) for fields.
+- [Cyble Health API](https://apis.io/apis/cyble/cyble-health-api/) — The Health API from Cyble — 1 operation(s) for health.
+- [Cyble Hosts API](https://apis.io/apis/cyble/cyble-hosts-api/) — The Hosts API from Cyble — 9 operation(s) for hosts.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [Odin](https://apis.io/collections/cyble/open-cyble-odin/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Cyble Odin Overlay](https://apis.io/overlays/cyble/cyble-odin-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cyble Authentication](https://apis.io/security/cyble/cyble-authentication/)
+- [Cyble Domain Security](https://apis.io/security/cyble/cyble-domain-security/)
+- [Cyble Trust Center](https://apis.io/security/cyble/cyble-trust-center/)
+- [Cyble Vulnerability Disclosure](https://apis.io/security/cyble/cyble-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Cyble Plans Pricing](https://apis.io/plans/cyble/cyble-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Cyble Rate Limits](https://apis.io/rate-limits/cyble/cyble-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cyble.com/)
+- [Documentation](https://docs.odin.io/introduction)
+- [Getting started](https://docs.odin.io/authentication)
+- [API reference](https://docs.odin.io/api-reference/introduction)
+- [Pricing](https://search.odin.io/pricing)
+- [Sign up](https://search.odin.io/login)
+- [Support](https://search.odin.io/community)
+- [Blog](https://cyble.com/blog/)
+- [Security](https://cyble.com/security-disclosure-policy)
+- [Compliance](https://trust.cyble.com/)
+- [Terms of service](https://search.odin.io/terms-of-service)
+- [Privacy policy](https://search.odin.io/privacy-policy)
+- [GitHub](https://github.com/cybledev)
+- [Status](https://status.odin.io)
+
+## API Evangelist rating
+
+**Kin Score 43.7** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 48.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 70.8 |
+| Access clarity | 28.9 |
+
+**Agent readiness 25.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 27.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cyble/](https://apis.io/providers/cyble/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cyble: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cyble/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
